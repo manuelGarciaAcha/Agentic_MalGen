@@ -13,7 +13,8 @@ Shared Repository for Agentic Malware Generation Research
 
 ### Agent Setup (Debian):
 1. Edit ollama configs for increased performance:
-   ``` sudo systemctl edit ollama
+   ``` 
+       sudo systemctl edit ollama
        # within ollama config:
        OLLAMA_DEBUG=1
        OLLAMA_FLASH_ATTENTION=1```
