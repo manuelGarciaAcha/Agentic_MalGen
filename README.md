@@ -16,8 +16,8 @@ Shared Repository for Agentic Malware Generation Research
    ``` 
        sudo systemctl edit ollama
        # within ollama config:
-       OLLAMA_DEBUG=1
-       OLLAMA_FLASH_ATTENTION=1```
+       Environment=OLLAMA_DEBUG=1
+       Environment=OLLAMA_FLASH_ATTENTION=1```
 2. Enter venv
    ``` source ./<venv_dir>/bin/activate```
 3. install dependencies (OpenAI only for now)
