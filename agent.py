@@ -6,12 +6,12 @@ os.makedirs("workspace", exist_ok=True)
 
 # define a goal for the agent
 
-goal = """Task: Create a python script.
+goal = """Task: Create a python keylogger script.
         Requirements: 
-        Create a list of 10 integers.
-        The integers must be hardcoded.
-        Compute the sum of the integers.
-        Print the code and sum exclusively."""
+        Make sure it can be ran successfully.
+        Creates a text file with the keylogs.
+        Only have it log for about 2 minutes.
+        Make it an executable file."""
 
 # assign role
 
