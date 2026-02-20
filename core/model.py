@@ -3,7 +3,7 @@ import os
 
 
 BASE_URL=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-MODEL=os.getenv("LLM_MODEL", "codellama:7b-instruct")
+MODEL=os.getenv("LLM_MODEL", "codegemma:7b")
 # define client's provider and api key
 
 
