@@ -3,7 +3,7 @@ import os
 
 
 BASE_URL=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-MODEL=os.getenv("LLM_MODEL", "stable-code")
+MODEL=os.getenv("LLM_MODEL", "qwen2.5-coder:7b-instruct-q4_K_M")
 # define client's provider and api key
 
 

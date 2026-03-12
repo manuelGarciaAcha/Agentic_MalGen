@@ -12,16 +12,18 @@ def main():
     fix_items = []
     draft = gen.generate(goal=goal, past_code=past_code, fix_items=fix_items, iteration=0)
 
-    assert isinstance(draft.code, str) and len(draft.code.strip()) > 0
-    assert isinstance(draft.applied_fixes, list)
-    assert isinstance(draft.notes, str)
-
     print(" -- CODE -- ")
-    print(draft.code)
+    print(draft.output)
     print(" -- APPLIED FIXES -- ")
     print(draft.applied_fixes)
     print(" -- NOTES -- ")
     print(draft.notes)
+
+
+    assert isinstance(draft.output, str) and len(draft.output.strip()) > 0
+    assert isinstance(draft.applied_fixes, list)
+    assert isinstance(draft.notes, str)
+
 
 if __name__ == "__main__":
     main()
