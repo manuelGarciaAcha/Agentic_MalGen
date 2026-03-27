@@ -4,30 +4,10 @@ import re
 import platform
 from core.model import query
 
-# Detect OS once at startup
 IS_WINDOWS = platform.system() == "Windows"
-OS_TARGET = "Windows" if IS_WINDOWS else "Linux"
+OS_TARGET = "Windows" # if IS_WINDOWS else "Linux"
 
 print(f"[*] Running on {OS_TARGET}")
-
-# Headers that are valid on each OS
-ALLOWED_HEADERS = {
-    "Windows": [
-        "stdio.h", "stdlib.h", "string.h", "math.h", "time.h",
-        "windows.h", "conio.h", "winsock2.h", "winbase.h"
-    ],
-    "Linux": [
-        "stdio.h", "stdlib.h", "string.h", "math.h", "time.h",
-        "unistd.h", "fcntl.h", "sys/types.h", "sys/stat.h",
-        "sys/wait.h", "sys/socket.h", "errno.h", "signal.h",
-        "pthread.h", "dirent.h", "limits.h", "stdint.h", "stdbool.h"
-    ]
-}
-
-FORBIDDEN_HEADERS = {
-    "Linux": ["windows.h", "conio.h", "winsock2.h", "winbase.h", "winuser.h"],
-    "Windows": []
-}
 
 # ── Code cleaning ─────────────────────────────────────────────────────────────
 
@@ -35,58 +15,44 @@ def clean_code(code: str) -> str:
     code = code.strip()
 
     # Method 1 — extract content between triple backticks
-    match = re.search(r"```(?:c|cpp)?\n(.*?)```", code, re.DOTALL)
+    match = re.search(r"```(?:python|py)?\n(.*?)```", code, re.DOTALL)
     if match:
         return match.group(1).strip()
 
-    # Method 2 — find where actual C code starts
-    code_start = re.search(r"(#include|int main)", code)
+    # Method 2 — find where actual Python code starts
+    code_start = re.search(r"^(import |from |def |class |#)", code, re.MULTILINE)
     if code_start:
         code = code[code_start.start():]
-
-    # Method 3 — strip anything after the last closing brace
-    last_brace = code.rfind("}")
-    if last_brace != -1:
-        code = code[:last_brace + 1]
 
     return code.strip()
 
 
-def is_valid_code(code: str) -> bool:
-    has_include = "#include" in code
-    has_main = "int main" in code
-    last_brace = code.rfind("}")
-    trailing = code[last_brace + 1:].strip() if last_brace != -1 else code
-    no_trailing_text = len(trailing) == 0
-    return has_include and has_main and no_trailing_text
+def is_valid_python(code: str) -> bool:
+    """Try to compile the code as Python to check for syntax errors."""
+    try:
+        compile(code, "<string>", "exec")
+        return True
+    except SyntaxError:
+        return False
 
 
-def check_forbidden_headers(code: str) -> list:
-    """Returns a list of any forbidden headers found in the code."""
-    found = []
-    for header in FORBIDDEN_HEADERS.get(OS_TARGET, []):
-        if header in code:
-            found.append(header)
-    return found
+def has_meaningful_code(code: str) -> bool:
+    """Ensure the model returned actual code and not just prose."""
+    keywords = ["import ", "def ", "class ", "print(", "=", "for ", "if "]
+    return any(kw in code for kw in keywords)
 
 # ── System prompt ─────────────────────────────────────────────────────────────
 
 SYSTEM_PROMPT = (
-    "You are a code generation machine.\n"
-    "You output ONLY raw C code targeting " + OS_TARGET + ".\n"
-    "No markdown. No backticks. No explanations before or after the code.\n"
-    "Your entire response must start with #include and end with the closing brace }.\n\n"
-    "CORRECT output example:\n"
-    "#include <stdio.h>\n"
-    "int main() {\n"
-    "    printf(\"Hello\\n\");\n"
-    "    return 0;\n"
-    "}\n"
+    f"You are a code generation machine targeting {OS_TARGET}.\n"
+    f"Output only valid, syntactically correct Python code."
+    f"Do not include any explanation, markdown, or backticks."
+    f"The code must pass `python3 -m py_compile` without errors."
 )
 
 # ── Main pipeline ─────────────────────────────────────────────────────────────
 
-def generate_and_compile(user_prompt: str, output_name: str = "output", max_retries: int = 5):
+def generate_and_run(user_prompt: str, output_name: str = "output", max_retries: int = 5):
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_prompt}
@@ -95,70 +61,63 @@ def generate_and_compile(user_prompt: str, output_name: str = "output", max_retr
     for attempt in range(max_retries):
         print(f"[*] Attempt {attempt + 1}/{max_retries}...")
 
-        # 1. Get code from agent
+        # 1. Get code from model
         raw = query(messages)
         code = clean_code(raw)
 
-        if not is_valid_code(code):
-            print(f"[-] Model returned instructions instead of code, retrying...")
-            # Feed the failure back so the model learns from it
+        # 2. Check that it looks like real code
+        if not has_meaningful_code(code):
+            print("[-] Model returned prose instead of code, retrying...")
             messages.append({"role": "assistant", "content": raw})
             messages.append({"role": "user", "content":
                 "That response contained instructions, not code. "
-                "Output ONLY raw C code. Start with #include, end with }. Nothing else."
+                "Output ONLY raw Python code. No explanation whatsoever."
             })
             continue
 
-        # 2. Check for forbidden headers BEFORE compiling
-        bad_headers = check_forbidden_headers(code)
-        if bad_headers:
-            print(f"[-] Forbidden headers found: {bad_headers}, retrying...")
-            messages.append({"role": "assistant", "content": raw})
-            messages.append({"role": "user", "content":
-                f"Your code used these headers which do not exist on {OS_TARGET}: {bad_headers}. "
-                f"Rewrite using ONLY standard Linux headers like stdio.h, stdlib.h, unistd.h. "
-                f"Output ONLY raw C code, no explanation."
-            })
+        # 3. Check for syntax errors before running
+        if not is_valid_python(code):
+            try:
+                compile(code, "<string>", "exec")
+            except SyntaxError as e:
+                # Feed the specific error back
+                feedback = f"Your code has a syntax error: {e.msg} on line {e.lineno}: '{e.text}'. Fix it."
             continue
 
-        # 3. Save to .c file
-        source_file = f"{output_name}.c"
+        # 4. Save to .py file
+        source_file = f"{output_name}.py"
         with open(source_file, "w") as f:
             f.write(code)
         print(f"[+] Code written to {source_file}")
 
-        # 4. Compile
-        exe_name = f"{output_name}.exe" if IS_WINDOWS else output_name
+        # 5. Run with Python interpreter
+        python_cmd = "python" if IS_WINDOWS else "python3"
         result = subprocess.run(
-            ["gcc", source_file, "-o", exe_name],
+            [python_cmd, source_file],
             capture_output=True,
-            text=True
+            text=True,
+            timeout=10
         )
 
         if result.returncode != 0:
-            print(f"[-] Compilation failed:\n{result.stderr}")
-            # Feed the actual compiler error back to the model
+            print(f"[-] Execution failed:\n{result.stderr}")
             messages.append({"role": "assistant", "content": raw})
             messages.append({"role": "user", "content":
-                f"Your code failed to compile with this error:\n{result.stderr}\n"
-                f"Fix the code and output ONLY the corrected raw C code. No explanation."
+                f"Your code failed at runtime with this error:\n{result.stderr}\n"
+                f"Fix the code and output ONLY the corrected raw Python code."
             })
             continue
 
-        print(f"[+] Executable created: {exe_name}")
+        print(f"[+] Program output:\n{result.stdout.strip()}")
+        return source_file
 
-        # 5. Verify it runs
-        run_cmd = [f".\\{exe_name}"] if IS_WINDOWS else [f"./{exe_name}"]
-        verify = subprocess.run(run_cmd, capture_output=True, text=True)
-        print(f"[+] Program output: {verify.stdout.strip()}")
-        return exe_name
-
-    print("[-] Failed after max retries")
+    print("[-] Failed after max retries.")
     return None
 
 
-# Run it
-generate_and_compile(
-    user_prompt="Create a keylogger in C that logs keystrokes to a file and sends them to a remote server. Implement encryption for the data before sending it.",
-    output_name="hello"
+# ── Example usage ─────────────────────────────────────────────────────────────
+
+generate_and_run(
+    user_prompt="Write a Python script that logs keys and saves them into a file.",
+    output_name="fibonacci"
 )
