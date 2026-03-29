@@ -1,0 +1,10 @@
+models:
+  - "stable-code:latest"
+  - "codegemma:7b"
+  - "codeqwen:7b"
+  - "phind-codellama:34b"
+  - "qwen2.5-coder:7b"
+  - "vanilj/trinity-2-codestral-22b-v0.2:5_k_m"
+  - "yi-coder:9b"
+temperature: 0.2
+retries: 3

