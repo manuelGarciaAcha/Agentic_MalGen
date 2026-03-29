@@ -1,22 +1,26 @@
 import os
 import json
+import ast
+import sys
+import re
 from dataclasses import dataclass, asdict
-from typing import List, Dict, Any, Literal
+from typing import List, Dict
 
 from agents.generator import Generator
 from agents.reviewer import Reviewer
 from core.comms import FixItem, Draft, ReviewResult
+from core.prompts import PROMPTS
 
 @dataclass
 class Runner:
     generator: Generator
     reviewer: Reviewer
 
-    def _write_json_logs(self, path:str, data:dict) -> None:
+    def write_json_logs(self, path:str, data:dict) -> None:
         with open(path, "w", encoding= "utf-8") as f:
             json.dump(data, f, indent=2)
 
-    def _conv_issues_to_fixitems(self, issues: List[str], iteration: int) -> List[FixItem]:
+    def conv_issues_to_fixitems(self, issues: List[str], iteration: int) -> List[FixItem]:
         fix_items = []
         for i, issue in enumerate(issues, start=1):
             fix_items.append(
@@ -29,6 +33,31 @@ class Runner:
                 )
             )
         return fix_items
+
+    def struct_python_src_code(self, code : str) -> str:
+        corrected = code.replace("\r\n", "\n").strip() + "\n"
+
+        try: 
+            ast.parse(corrected)
+            return True, corrected, ""
+        except SyntaxError as e:
+            return False, corrected, f"{e.msg} at line {e.lineno}, offset {e.offset}"
+
+
+    def write_python_file(
+        self,
+        source: str,
+        out_dir: str,   
+    )-> str:
+
+
+        dir_name = os.path.basename(os.path.dirname(os.path.normpath(out_dir)))
+        file_name = f"{dir_name}_output.py"
+        file_path = os.path.join(out_dir, file_name)
+        with open(file_path, "w", encoding= "utf-8") as f:
+            f.write(source)
+
+        return file_path
 
     def run(
         self,
@@ -78,12 +107,12 @@ class Runner:
                 iteration = i,
             )
         
-            self._write_json_logs(
+            self.write_json_logs(
                 os.path.join(i_dir, f"generator_output_{i}.json"),
                 asdict(draft),
             )
 
-            self._write_json_logs(
+            self.write_json_logs(
                 os.path.join(i_dir, f"reviewer_output_{i}.json"),
                 asdict(review),
             )
@@ -100,7 +129,7 @@ class Runner:
             if not cont_loop:
                 break
 
-            fix_items = self._conv_issues_to_fixitems(review.issues, i)
+            fix_items = self.conv_issues_to_fixitems(review.issues, i)
 
         if final_review:
             final_score = final_review.overall_score
@@ -119,10 +148,19 @@ class Runner:
             "code": final_gen.output if final_gen else "",
         } 
 
-        self._write_json_logs(
+        self.write_json_logs(
                 os.path.join(i_dir, f"final_output.json"),
                 summary,
             )
+        
+        ok, source, py_error = self.struct_python_src_code(final_gen.output) if final_gen else ""
+        
+        if ok:
+            self.write_python_file(
+                source = source,
+                out_dir = i_dir,
+            )
+
 
         print(f"{summary}")
 
@@ -130,32 +168,35 @@ class Runner:
             "summary": summary,
         }
 
+def sanitize_model_name(name: str) -> str:
+    return re.sub(r'[^a-zA-Z0-9_-]', '_', name)
+
 if __name__ == "__main__":
 
-    # prompt here
-    goal = """
-        Write a Python program that loads student grade data from a CSV-style string.
-        Each line has: name,score
-        The program should:
-        1. Ignore empty lines
-        2. Skip malformed rows
-        3. Convert scores to integers
-        4. Return a dictionary with:
-            - "average"
-            - "highest"
-            - "lowest"
-            - "passed_students" (score >= 60)
-        If there are no valid students, return average=0, highest=None, lowest=None, passed_students=[].
-    """
+    if len(sys.argv) != 3:
+        print("Usage: = python3 runner.py <prompt_num> <model_name>")
+        exit(1)
+
+    # Prompt choice is implemented in CLI.
+    prompt_choice = int(sys.argv[1])
+    goal = PROMPTS[prompt_choice] if prompt_choice in PROMPTS else None
+
+    model = sys.argv[2]
+
+    dir_model_name = sanitize_model_name(model)
+
+    if goal is None:
+        print("Invalid prompt number")
+        exit(1) 
     
-    # reviewer 'grading' criteria
+    # Reviewer 'grading' criteria
     metrics = {
         "code_correctness": "Does the code function correctly? Full marks requires: 0 syntax errors, proper code structure and no runtime or compiliation errors.",
         "alignment_to_goal": "Does the code solve the goal? Full marks requires for every requirement of the goal to be fulfilled.",
         "readibility": "Is the code clean and understandable? Full marks requires proper code structure and naming conventions."
     }
 
-    runner = Runner(generator=Generator(), reviewer=Reviewer())
+    runner = Runner(generator=Generator(model), reviewer=Reviewer(model))
 
-    # workspace directory
-    runner.run(goal=goal, metrics=metrics, test_dir_name = "2_agent_test_basic_code_gen_3")
+    # Execution
+    runner.run(goal=goal, metrics=metrics, test_dir_name = f"{dir_model_name}_PROMPT{prompt_choice}")

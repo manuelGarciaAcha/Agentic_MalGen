@@ -55,12 +55,16 @@ Recieved input:
 
 ### Usage:
 
-- Prompt, scoring criteria/metrics and workspace directory are modified, per run, at the bottom of the runner.py program code.
+- Prompt, scoring criteria/metrics and workspace directory are modified, per run via CLI execution of the runner.
 
 ``` 
    cd agent
    source ./.venv/bin/activate
-   python3 runner.py ```
+   python3 runner.py <prompt_number> <model_name>
+   
+```
 
+### NOTE:
 
+Need to cite: ollama, models used, etc
 
