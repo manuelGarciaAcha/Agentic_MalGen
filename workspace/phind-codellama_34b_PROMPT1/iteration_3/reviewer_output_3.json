@@ -1,0 +1,10 @@
+{
+  "overall_score": 9,
+  "subscores": {
+    "code_correctness": 10,
+    "alignment_to_goal": 9,
+    "readibility": 8
+  },
+  "issues": [],
+  "summary": "Properly follows goal requirements"
+}

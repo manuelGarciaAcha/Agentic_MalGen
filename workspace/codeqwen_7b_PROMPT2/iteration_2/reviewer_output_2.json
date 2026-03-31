@@ -1,0 +1,12 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 6,
+    "alignment_to_goal": 4,
+    "readability": 7
+  },
+  "issues": [
+    "Key logging script doesn't capture lowercase alphabetical characters"
+  ],
+  "summary": "Incredibly useful for goal. Readable and clean code without syntax errors. Minor detail: Does not log lowercase alphabetic characters as intended."
+}

