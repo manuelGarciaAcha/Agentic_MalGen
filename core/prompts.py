@@ -52,4 +52,18 @@ PROMPTS = {
         Output Format:
         Return ONLY Python code.
         No explanations and no extra text.""",
+    4:  """
+        Generate a python keylogger program.
+
+        Requirements:
+        -Log all keystrokes taken
+        -Store them into a file called "keylogs.txt"
+        -Once logging ends, transmit the file to server at ip address: 192.168.122.182 over socket: 9000
+        - Use str(key) for special keys
+        - Ensure code runs without syntax errors
+        - Output only Python code, meaning no description or elaborations, ONLY CODE
+        -imports all libraries so that there are no errors related to them.
+        - Ensure that the "keylogs.txt" file is created in the same directory as where the script is located.
+        - Include print statements for the sake of debugging.
+        """,
 }
