@@ -1,8 +1,12 @@
 {
   "overall_score": 0,
-  "subscores": null,
+  "subscores": {
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
+  },
   "issues": [
-    "CODE_GENERATION_ERROR: code segment does not compile"
+    "ERROR: Reviewer JSON Error"
   ],
-  "summary": "ERROR: Generator Code Format Error"
+  "summary": "JSON ERROR"
 }

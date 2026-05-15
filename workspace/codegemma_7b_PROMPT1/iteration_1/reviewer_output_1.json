@@ -3,8 +3,8 @@
   "subscores": {
     "code_correctness": 8,
     "alignment_to_goal": 8,
-    "readibility": 8
+    "readibility": 7
   },
   "issues": [],
-  "summary": "Excellent script, meets all requirements"
+  "summary": "Excellent code generation, aligned with the goal, minor readability improvement."
 }

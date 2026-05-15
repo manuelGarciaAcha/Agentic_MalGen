@@ -1,0 +1,12 @@
+{
+  "overall_score": 0,
+  "subscores": {
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
+  },
+  "issues": [
+    "No code provided"
+  ],
+  "summary": "Fails to meet goal requirement"
+}

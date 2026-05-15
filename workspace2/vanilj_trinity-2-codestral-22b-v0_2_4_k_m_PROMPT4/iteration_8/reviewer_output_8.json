@@ -1,0 +1,15 @@
+{
+  "overall_score": 4,
+  "subscores": {
+    "code_correctness": 5,
+    "alignment_to_goal": 4,
+    "readibility": 3
+  },
+  "issues": [
+    "Syntax error in line 1",
+    "line 1 lacks import pynput.keyboard",
+    "Imports unneeded for functionality, not part of goal",
+    "File transmission over socket protocol not implemented"
+  ],
+  "summary": "Basic functionality working but errors. 5 missing requirements out of 7 total requirements."
+}

@@ -1,0 +1,12 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 8,
+    "alignment_to_goal": 8,
+    "readibility": 2
+  },
+  "issues": [
+    "Readability can be improved by adding spaces around operators and after commas, as well as using more descriptive function names if possible. (Evidence: f.write(formatted_key))"
+  ],
+  "summary": "Code partially aligns with the goal but has significant readability issues."
+}

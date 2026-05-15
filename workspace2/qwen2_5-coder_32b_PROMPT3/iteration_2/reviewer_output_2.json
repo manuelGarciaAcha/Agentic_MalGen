@@ -1,0 +1,14 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 5,
+    "readibility": 8
+  },
+  "issues": [
+    "The on_press function does not handle all special keys correctly. For example, 'tab', 'shift', etc., are not currently enclosed in brackets (line 4-13).",
+    "No exception handling is implemented around the keyboard hooks which can lead to unhandled exceptions.",
+    "The script lacks comments or docstrings for better understanding and maintenance."
+  ],
+  "summary": "Code functions but does not fully align with goal, good readability, 3 issues"
+}

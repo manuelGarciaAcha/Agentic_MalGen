@@ -1,0 +1,12 @@
+{
+  "overall_score": 0,
+  "subscores": {
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readability": 0
+  },
+  "issues": [
+    "Code is missing"
+  ],
+  "summary": "ERROR: Code Missing"
+}

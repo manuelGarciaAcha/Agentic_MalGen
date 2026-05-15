@@ -1,0 +1,12 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 6,
+    "readibility": 7
+  },
+  "issues": [
+    "Special keys are not being logged correctly according to the goal. For example, 'shift' logs as [SHIFT] and [/SHIFT], but should be handled like other special keys. See lines 12-20"
+  ],
+  "summary": "Issues with logging shift key events."
+}

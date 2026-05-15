@@ -1,0 +1,12 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 5,
+    "readibility": 7
+  },
+  "issues": [
+    "Special keys 'shift', 'shift_l', and 'shift_r' are logged on every press event. Ensure it logs only once when pressed (lines 14-19)."
+  ],
+  "summary": "Logs special keys on release as well, otherwise meets requirements."
+}

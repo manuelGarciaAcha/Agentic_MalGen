@@ -1,0 +1,10 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 4,
+    "alignment_to_goal": 6,
+    "readability": 5
+  },
+  "issues": [],
+  "summary": "Well-organized and fulfills all requirements"
+}

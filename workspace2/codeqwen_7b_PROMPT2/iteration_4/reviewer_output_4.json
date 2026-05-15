@@ -1,0 +1,10 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 10,
+    "alignment_to_goal": 4,
+    "readability": 7
+  },
+  "issues": [],
+  "summary": "Passes all requirements"
+}

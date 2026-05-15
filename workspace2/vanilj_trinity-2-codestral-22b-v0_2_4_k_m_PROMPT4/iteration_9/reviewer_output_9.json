@@ -1,0 +1,13 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 6,
+    "alignment_to_goal": 7,
+    "readibility": 8
+  },
+  "issues": [
+    "Code is very clean, readable and well structured.",
+    "Some minor debugging print statements left in code."
+  ],
+  "summary": "Fully functional keylogger that fulfills all goals"
+}

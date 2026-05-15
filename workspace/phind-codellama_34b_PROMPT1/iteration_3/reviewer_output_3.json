@@ -1,10 +1,10 @@
 {
-  "overall_score": 9,
+  "overall_score": 6,
   "subscores": {
-    "code_correctness": 10,
-    "alignment_to_goal": 9,
-    "readibility": 8
+    "code_correctness": 8,
+    "alignment_to_goal": 4,
+    "readibility": 6
   },
   "issues": [],
-  "summary": "Properly follows goal requirements"
+  "summary": "Aligns with goal, decent code generation, no issues"
 }

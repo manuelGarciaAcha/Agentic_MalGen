@@ -1,12 +1,12 @@
 {
-  "overall_score": 0,
+  "overall_score": 5,
   "subscores": {
-    "code_correctness": 0,
-    "alignment_to_goal": 0,
-    "readibility": 0
+    "code_correctness": 5,
+    "goal_alignment": 4,
+    "readibility": 6
   },
   "issues": [
-    "ERROR: Reviewer JSON Error"
+    "Missing imports"
   ],
-  "summary": "JSON ERROR"
+  "summary": "Generates keylogs with some issues, must not handle all special keys"
 }

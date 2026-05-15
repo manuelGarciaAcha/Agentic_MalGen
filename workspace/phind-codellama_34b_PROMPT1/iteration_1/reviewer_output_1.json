@@ -3,10 +3,10 @@
   "subscores": {
     "code_correctness": 0,
     "alignment_to_goal": 0,
-    "readibility": 0
+    "readability": 0
   },
   "issues": [
-    "ERROR: Reviewer JSON Error"
+    "No code to review"
   ],
-  "summary": "JSON ERROR"
+  "summary": "ERROR: No Code Provided"
 }

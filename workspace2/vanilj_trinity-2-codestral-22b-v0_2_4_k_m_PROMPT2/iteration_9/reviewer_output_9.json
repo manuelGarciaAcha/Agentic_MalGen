@@ -1,0 +1,13 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 8,
+    "alignment_to_goal": 7,
+    "readibility": 6
+  },
+  "issues": [
+    "Syntax error on line 8 causing potential crash",
+    "Lack of check for script to exit properly when no keystrokes detected"
+  ],
+  "summary": "Substantially meets goal, minor issues with code correctness and alignment"
+}

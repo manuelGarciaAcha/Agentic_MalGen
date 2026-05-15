@@ -1,0 +1,14 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 8,
+    "readibility": 6
+  },
+  "issues": [
+    "Potential IOError for opening/writing to file not handled",
+    "Consider using 'with' statement when opening files",
+    "keylogs.txt may overwrite existing data"
+  ],
+  "summary": "Minor bugs, but code overall meets requirements and goals of capturing keystrokes and writing to log files"
+}

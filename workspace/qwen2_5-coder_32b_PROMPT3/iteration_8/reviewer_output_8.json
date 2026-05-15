@@ -1,0 +1,13 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 6,
+    "alignment_to_goal": 5,
+    "readibility": 4
+  },
+  "issues": [
+    "Special keys other than ENTER and SPACE are not consistently formatted. For example, line 11 handles [ENTER] and [SPACE], but other special keys should be handled similarly.",
+    "The program lacks handling for termination key (ESC) to cleanly close the file if an exception occurs before ESC is pressed. This could lead to a dangling file handle."
+  ],
+  "summary": "Handles most requirements, inconsistent formatting of special keys, lacking clean termination and file closure handling."
+}

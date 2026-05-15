@@ -1,0 +1,10 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 5,
+    "alignment_to_goal": 4,
+    "readability": 5
+  },
+  "issues": [],
+  "summary": "Fails to align with goal, decent code generation, 0 issues"
+}

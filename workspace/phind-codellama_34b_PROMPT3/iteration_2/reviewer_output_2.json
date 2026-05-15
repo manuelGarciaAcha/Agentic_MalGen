@@ -1,6 +1,12 @@
 {
   "overall_score": 0,
-  "subscores": {},
-  "issues": [],
-  "summary": ""
+  "subscores": {
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
+  },
+  "issues": [
+    "ERROR: Reviewer JSON Error"
+  ],
+  "summary": "JSON ERROR"
 }

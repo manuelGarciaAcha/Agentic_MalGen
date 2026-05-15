@@ -1,0 +1,14 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 8,
+    "alignment_to_goal": 7,
+    "readibility": 4
+  },
+  "issues": [
+    "Error in line 10: Missing parentheses around print statement",
+    "Missing main() wrapper to ensure proper program flow",
+    "Using bare except in line 37 which is too broad"
+  ],
+  "summary": "Logs keystrokes to keylogs.txt, transmits file over network after logging finishes, but has issues with exception handling and flow control."
+}

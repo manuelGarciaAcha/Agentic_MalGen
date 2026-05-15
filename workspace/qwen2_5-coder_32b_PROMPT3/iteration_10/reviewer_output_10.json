@@ -1,0 +1,14 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 6,
+    "readibility": 5
+  },
+  "issues": [
+    "Special keys other than ENTER and SPACE are not consistently formatted. For example, Shift or Ctrl keys are ignored without logging (line 14).",
+    "The program lacks handling for termination key (ESC) to cleanly close the file if an exception occurs before ESC is pressed. This could lead to a dangling file handle.",
+    "Unnecessary print statements may clutter output. These should be removed unless they serve a debugging purpose (lines 9, 12, 18, 20)."
+  ],
+  "summary": "The code captures keystrokes and writes them to a file, but it has issues with formatting special keys and lacks robust file handling when the termination key is pressed. Additionally, unnecessary print statements are present."
+}

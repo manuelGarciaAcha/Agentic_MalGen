@@ -1,0 +1,12 @@
+{
+  "overall_score": 8,
+  "subscores": {
+    "code_correctness": 8,
+    "alignment_to_goal": 9,
+    "readibility": 7
+  },
+  "issues": [
+    "Missing documentation"
+  ],
+  "summary": "Functions as intended; captures keystrokes and writes to file. One issue."
+}

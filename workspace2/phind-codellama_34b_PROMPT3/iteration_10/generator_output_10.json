@@ -1,0 +1,8 @@
+{
+  "output": "import os\nimport sys\nimport time\nfrom pynput import keyboard\n\ntime_to_exit = False\n\ndef on_key_release(key):\n    if key == keyboard.Key.esc:\n        global time_to_exit\n        time_to_exit = True\n\n    return\n\ndef main():\n    with open(\"keylogs.txt\", \"a\") as f:\n        try:\n            listener = keyboard.Listener(on_release=on_key_release)\n            listener.start()\n            while not time_to_exit:\n                time.sleep(0.1)\n        finally:\n            listener.stop()\n\nif __name__ == \"__main__\":\n    main()",
+  "notes": "Added proper file handling, minimized unnecessary output and optimized for better robustness.",
+  "applied_fixes": [
+    "major1"
+  ],
+  "iterations": 10
+}

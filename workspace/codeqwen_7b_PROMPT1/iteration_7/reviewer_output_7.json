@@ -1,0 +1,12 @@
+{
+  "overall_score": 3,
+  "subscores": {
+    "code_correctness": 4,
+    "alignment_to_goal": 0,
+    "readability": 5
+  },
+  "issues": [
+    "iteration6_issue1"
+  ],
+  "summary": "Basic script written in python. Good amount of code for the goal but some elements do not fulfill requirements."
+}

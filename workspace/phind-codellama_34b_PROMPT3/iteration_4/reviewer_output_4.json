@@ -1,0 +1,10 @@
+{
+  "overall_score": 8,
+  "subscores": {
+    "code_correctness": 9,
+    "goal_alignment": 8,
+    "readability": 7
+  },
+  "issues": [],
+  "summary": "Complete program designed for educational cybersecurity testing to record user keystrokes and save them to a file called keylogs.txt."
+}

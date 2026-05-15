@@ -1,0 +1,13 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 6,
+    "readibility": 5
+  },
+  "issues": [
+    "Missing import from 'pynput' library",
+    "No print statement for debugging the captured keystroke"
+  ],
+  "summary": "Fails to fully align with goal, decent code generation, multiple issues"
+}

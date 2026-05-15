@@ -1,12 +1,12 @@
 {
-  "overall_score": 6,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 6,
-    "alignment_to_goal": 4,
-    "readability": 7
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
   "issues": [
-    "Key logging script doesn't capture lowercase alphabetical characters"
+    "ERROR: Reviewer JSON Error"
   ],
-  "summary": "Incredibly useful for goal. Readable and clean code without syntax errors. Minor detail: Does not log lowercase alphabetic characters as intended."
+  "summary": "JSON ERROR"
 }

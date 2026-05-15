@@ -1,0 +1,13 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 6,
+    "alignment_to_goal": 5,
+    "readibility": 4
+  },
+  "issues": [
+    "Keystrokes are not consistently formatted. Special keys other than ENTER and SPACE are enclosed in brackets but written directly (line 11).",
+    "Lack of exception handling for file operations can lead to data loss or errors if the file cannot be opened (lines 7-9, 13-15, 18-20)."
+  ],
+  "summary": "Issues with consistent formatting and robust file handling"
+}

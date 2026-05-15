@@ -1,0 +1,14 @@
+{
+  "overall_score": 4,
+  "subscores": {
+    "code_correctness": 4,
+    "alignment_to_goal": 2,
+    "readibility": 5
+  },
+  "issues": [
+    "Special keys are not being logged correctly according to the goal. For example, 'shift' should be handled like other special keys but it currently logs as [SHIFT]. See line 8.",
+    "The script does not handle errors gracefully for keyboard-related exceptions. The Exception handler is too broad and doesn't handle specific issues. See lines 12-14.",
+    "Special keys like 'tab', 'esc', 'backspace' are not logged in the required format. They should be recorded in a readable format similar to [ENTER] or [SPACE]. Refer to line 9-13."
+  ],
+  "summary": "Does not align with goal for special key logging, error handling issues, and missing debug print statements"
+}

