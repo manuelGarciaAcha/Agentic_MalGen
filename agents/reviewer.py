@@ -110,15 +110,15 @@ class Reviewer:
 		
 		if not past_code or not past_code.strip():
 	        fallback_metrics = {k: 0 for k in metrics.keys()}
-	
-	        return ReviewResult(
-	            overall_score=0,
-	            subscores=fallback_metrics,
-	            issues=[RETRY_FIRST_ITERATION],
-	            summary="Generator produced empty or whitespace-only code."
-	        )
+			
+			return ReviewResult(
+				overall_score=0,
+				subscores=fallback_metrics,
+				issues=[RETRY_FIRST_ITERATION],
+				summary="Generator produced empty or whitespace-only code."
+			)
 		
-        prompt = self.build_prompt(goal, past_code, fix_items, metrics, iteration)
+		prompt = self.build_prompt(goal, past_code, fix_items, metrics, iteration)
         raw = query(prompt, self.model)
 
         print(raw)
