@@ -97,65 +97,41 @@ class Reviewer:
         ]
 
     # Output generation and standardization: contains the review in strict JSON
-    def review(
-        self,
-        goal: str,
-        past_code: str,
-        fix_items: List[FixItem],
-        metrics: Dict[str,str],
-        iteration: int,
-    )-> ReviewResult:
+def review(
+    self,
+    goal: str,
+    past_code: str,
+    fix_items: List[FixItem],
+    metrics: Dict[str, str],
+    iteration: int,
+) -> ReviewResult:
 
-        fix_items = fix_items or []
-		
-		if not past_code or not past_code.strip():
-	        fallback_metrics = {k: 0 for k in metrics.keys()}
-			
-			return ReviewResult(
-				overall_score=0,
-				subscores=fallback_metrics,
-				issues=[RETRY_FIRST_ITERATION],
-				summary="Generator produced empty or whitespace-only code."
-			)
-		
-		prompt = self.build_prompt(goal, past_code, fix_items, metrics, iteration)
-        raw = query(prompt, self.model)
+    fix_items = fix_items or []
 
-        print(raw)
-
-        data = self._parse_json_reviewer(raw, metrics)
-        subscores = data.get("subscores",{})
-        overall_score = round(sum(subscores.values()) / len(subscores)) if subscores else 0
-        print(f"OVERALL: {overall_score}\n\n\n")
+    if not past_code or not past_code.strip():
+        fallback_metrics = {k: 0 for k in metrics.keys()}
 
         return ReviewResult(
-            overall_score = overall_score,
-            subscores = subscores,
-            issues = list(data.get("issues", [])),
-            summary = str(data.get("summary", ""))
+            overall_score=0,
+            subscores=fallback_metrics,
+            issues=[RETRY_FIRST_ITERATION],
+            summary="Generator produced empty or whitespace-only code."
         )
 
-    # Basic LLM output clean-up for proper JSON result
-    def _parse_json_reviewer(self, raw: str, metrics: Dict[str,str]) -> dict:
-        try:
-            raw = raw.strip()
-            if raw.startswith("```"):
-                raw = raw.strip("`")
-                raw = raw.replace("json", "", 1).strip()
+    prompt = self.build_prompt(goal, past_code, fix_items, metrics, iteration)
+    raw = query(prompt, self.model)
 
-            if raw.startswith(">"):
-                raw = raw.lstrip("> ").strip()
+    print(raw)
 
-            return json.loads(raw)
-        except Exception as e:
-            print(f"Reviewer JSON Parse failed", e)
+    data = self._parse_json_reviewer(raw, metrics)
+    subscores = data.get("subscores", {})
+    overall_score = round(sum(subscores.values()) / len(subscores)) if subscores else 0
 
-            # zero out keys for failure case
-            fallback_metrics = {k: 0 for k in metrics.keys()} 
+    print(f"OVERALL: {overall_score}\n\n\n")
 
-            return {
-                "overall_score":0,
-                f"subscores": fallback_metrics,
-                f"issues":[REVIEWER_JSON_ERR],
-                "summary": "JSON ERROR"
-            }   
+    return ReviewResult(
+        overall_score=overall_score,
+        subscores=subscores,
+        issues=list(data.get("issues", [])),
+        summary=str(data.get("summary", ""))
+    )
