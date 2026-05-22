@@ -97,6 +97,30 @@ class Runner:
                 iteration = i,
             )
 
+            if not draft.output or not draft.output.strip():
+                review = ReviewResult(
+                    overall_score=0,
+                    subscores={k: 0 for k in metrics},
+                    issues=["Generator produced empty or whitespace-only code. Retry generation from the previous valid code."],
+                    summary=f"Generator failed or produced empty output: {draft.notes}",
+                )
+
+                self.write_json_logs(
+                    os.path.join(i_dir, f"generator_output_{i}.json"),
+                    asdict(draft),
+                )
+    
+                self.write_json_logs(
+                    os.path.join(i_dir, f"reviewer_output_{i}.json"),
+                    asdict(review),
+                )
+
+                final_gen = draft
+                final_review = review
+
+                fix_items = self.conv_issues_to_fixitems(review.issues, i)
+                continue
+            
             curr_code = draft.output
 
             review: ReviewResult = self.reviewer.review(
