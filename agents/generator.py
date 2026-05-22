@@ -127,5 +127,5 @@ class Generator:
             return {
                 "code":"",
                 "applied_fixes":[],
-                "notes": {GENERATOR_JSON_ERR}
+                "notes": GENERATOR_JSON_ERR
                 }
