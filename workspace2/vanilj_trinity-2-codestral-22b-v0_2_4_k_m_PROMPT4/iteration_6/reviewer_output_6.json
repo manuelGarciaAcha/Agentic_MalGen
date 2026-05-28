@@ -1,12 +1,13 @@
 {
-  "overall_score": 0,
+  "overall_score": 8,
   "subscores": {
-    "code_correctness": 0,
-    "alignment_to_goal": 0,
-    "readibility": 0
+    "code_correctness": 9,
+    "alignment_to_goal": 8,
+    "readibility": 7
   },
   "issues": [
-    "ERROR: Reviewer JSON Error"
+    "Missing import statement for 'socket' library",
+    "No error handling in sendSocketData() function"
   ],
-  "summary": "JSON ERROR"
+  "summary": "Functionally correct with few issues"
 }

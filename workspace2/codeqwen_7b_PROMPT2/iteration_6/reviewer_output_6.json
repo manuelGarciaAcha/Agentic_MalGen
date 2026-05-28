@@ -1,0 +1,10 @@
+{
+  "overall_score": 10,
+  "subscores": {
+    "code_correctness": 10,
+    "goal_alignment": 10,
+    "readability": 9
+  },
+  "issues": [],
+  "summary": "Passes all alignment and requirement checks. 0 issues, 100% correctness and readability score."
+}

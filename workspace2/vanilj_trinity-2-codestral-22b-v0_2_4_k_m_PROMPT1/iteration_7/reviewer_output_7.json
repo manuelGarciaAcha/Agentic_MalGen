@@ -1,12 +1,13 @@
 {
-  "overall_score": 0,
+  "overall_score": 8,
   "subscores": {
-    "code_correctness": 0,
-    "alignment_to_goal": 0,
-    "readibility": 0
+    "code_correctness": 9,
+    "alignment_to_goal": 8,
+    "readibility": 7
   },
   "issues": [
-    "ERROR: Empty code submission"
+    "Missing import for os",
+    "Possible issue with creating log file in same directory"
   ],
-  "summary": "No code submitted for review"
+  "summary": "Nearly meets all goals, a few minor issues"
 }

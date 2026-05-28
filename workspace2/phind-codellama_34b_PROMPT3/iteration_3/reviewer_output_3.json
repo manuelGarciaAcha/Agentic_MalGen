@@ -6,7 +6,7 @@
     "readibility": 0
   },
   "issues": [
-    "No code provided"
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
   ],
-  "summary": "Fails to meet goal requirement"
+  "summary": "Generator failed or produced empty output: ERROR: Generator JSON error"
 }

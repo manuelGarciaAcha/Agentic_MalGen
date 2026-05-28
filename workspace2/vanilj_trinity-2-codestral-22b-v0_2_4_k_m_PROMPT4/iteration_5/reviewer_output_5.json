@@ -2,11 +2,11 @@
   "overall_score": 0,
   "subscores": {
     "code_correctness": 0,
-    "goal_alignment": 0,
+    "alignment_to_goal": 0,
     "readibility": 0
   },
   "issues": [
-    "Failed to generate any code"
+    "ERROR: Reviewer JSON Error"
   ],
-  "summary": "Error in goal achievement and code implementation"
+  "summary": "JSON ERROR"
 }

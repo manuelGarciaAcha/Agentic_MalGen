@@ -1,13 +1,12 @@
 {
-  "overall_score": 7,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 8,
-    "alignment_to_goal": 7,
-    "readibility": 6
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
   "issues": [
-    "Syntax error on line 8 causing potential crash",
-    "Lack of check for script to exit properly when no keystrokes detected"
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
   ],
-  "summary": "Substantially meets goal, minor issues with code correctness and alignment"
+  "summary": "Generator failed or produced empty output: ERROR: Generator JSON error"
 }

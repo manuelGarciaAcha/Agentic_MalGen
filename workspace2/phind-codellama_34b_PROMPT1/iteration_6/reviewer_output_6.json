@@ -3,10 +3,10 @@
   "subscores": {
     "code_correctness": 0,
     "alignment_to_goal": 0,
-    "readability": 0
+    "readibility": 0
   },
   "issues": [
-    "Code is missing"
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
   ],
-  "summary": "ERROR: Code Missing"
+  "summary": "Generator failed or produced empty output: ERROR: Generator JSON error"
 }

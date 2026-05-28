@@ -6,7 +6,7 @@
     "readibility": 0
   },
   "issues": [
-    "ERROR: Reviewer JSON Error"
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
   ],
-  "summary": "JSON ERROR"
+  "summary": "Generator failed or produced empty output: Redoing full code generation since no valid previous version given."
 }

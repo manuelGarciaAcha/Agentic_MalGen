@@ -1,0 +1,10 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 5,
+    "alignment_to_goal": 5,
+    "readibility": 4
+  },
+  "issues": [],
+  "summary": "Full code generation success, meets all requirements"
+}

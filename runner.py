@@ -35,6 +35,8 @@ class Runner:
         return fix_items
 
     def struct_python_src_code(self, code : str) -> str:
+        if not code or not code.strip():
+            return False, "", "empty or whitespace"
         corrected = code.replace("\r\n", "\n").strip() + "\n"
 
         try: 
@@ -86,6 +88,7 @@ class Runner:
         os.makedirs(test_dir, exist_ok = True)
 
         for i in range(1, max_iterations +1):
+            cont_loop = True
 
             i_dir = os.path.join(test_dir, f"iteration_{i}")
             os.makedirs(i_dir, exist_ok=True)
@@ -104,6 +107,9 @@ class Runner:
                     issues=["Generator produced empty or whitespace-only code. Retry generation from the previous valid code."],
                     summary=f"Generator failed or produced empty output: {draft.notes}",
                 )
+
+                print("DEBUG review type:", type(review))
+                print("DEBUG review value:", review)
 
                 self.write_json_logs(
                     os.path.join(i_dir, f"generator_output_{i}.json"),
@@ -131,6 +137,9 @@ class Runner:
                 iteration = i,
             )
         
+            print("DEBUG review type:", type(review))
+            print("DEBUG review value:", review)
+
             self.write_json_logs(
                 os.path.join(i_dir, f"generator_output_{i}.json"),
                 asdict(draft),
@@ -141,11 +150,21 @@ class Runner:
                 asdict(review),
             )
 
-            cont_loop = True
+            pass_score = 7
+            
+            # Enforce a passing score of 7 or higher
+            low_scores = [
+                (name, score)
+                for name, score in review.subscores.items()
+                if score < pass_score
+            ]
 
-            if i >= min_iterations and len(review.issues) == 0:
+            if low_scores and not review.issues:
+                review.issues.append("One or more subscores are below 7 without justification")
+
+            if i >= min_iterations and review.overall_score >= pass_score and len(review.issues) == 0 and isinstance(review.issues, list):
                 cont_loop = False
-                stop_reason = "No Issues"
+                stop_reason = "No Issues, Passing Score"
 
             final_gen = draft
             final_review = review

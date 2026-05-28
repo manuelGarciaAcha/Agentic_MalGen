@@ -1,10 +1,12 @@
 {
-  "overall_score": 8,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 8,
-    "alignment_to_goal": 6,
-    "readibility": 9
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
-  "issues": [],
-  "summary": "Meets goal requirements and follows best practices"
+  "issues": [
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
+  ],
+  "summary": "Generator failed or produced empty output: ERROR: Generator JSON error"
 }

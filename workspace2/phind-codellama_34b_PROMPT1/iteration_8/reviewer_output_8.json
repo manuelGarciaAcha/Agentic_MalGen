@@ -1,12 +1,10 @@
 {
-  "overall_score": 0,
+  "overall_score": 5,
   "subscores": {
-    "code_correctness": 0,
-    "alignment_to_goal": 0,
-    "readibility": 0
+    "code_correctness": 6,
+    "alignment_to_goal": 5,
+    "readibility": 5
   },
-  "issues": [
-    "ERROR: Reviewer JSON Error"
-  ],
-  "summary": "JSON ERROR"
+  "issues": [],
+  "summary": "Fulfilled goal, proper code structure and naming conventions"
 }

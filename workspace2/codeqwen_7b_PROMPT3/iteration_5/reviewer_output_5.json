@@ -1,13 +1,12 @@
 {
-  "overall_score": 7,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 8,
-    "alignment_to_goal": 7,
-    "readability": 6
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
   "issues": [
-    "Termination key (ESC) does not terminate the listener",
-    "Improve readability of code by adding comments and breaking it into smaller functions"
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
   ],
-  "summary": "Functionally correct program but lacking termination requirement"
+  "summary": "Generator failed or produced empty output: ERROR: Generator JSON error"
 }

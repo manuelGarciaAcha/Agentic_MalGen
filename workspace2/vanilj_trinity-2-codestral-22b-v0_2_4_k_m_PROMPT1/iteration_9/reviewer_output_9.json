@@ -1,14 +1,12 @@
 {
-  "overall_score": 5,
+  "overall_score": 9,
   "subscores": {
-    "code_correctness": 6,
-    "alignment_to_goal": 5,
-    "readability": 4
+    "code_correctness": 10,
+    "alignment_to_goal": 10,
+    "readability": 8
   },
   "issues": [
-    "Missing import statement for 'pynput'.",
-    "The 'keylogs.txt' file may not be created in the same directory as where the script is located due to the use of 'open('log.txt', 'a')', which should be 'open('keylogs.txt', 'a')'.",
-    "No exception handling for potential IOErrors during file writing."
+    "Remove 'print' statements from final version."
   ],
-  "summary": "Code functions but with issues in alignment and readability"
+  "summary": "Fully aligns with the goals and has great readability. Only minor issue with unnecessary print statements."
 }

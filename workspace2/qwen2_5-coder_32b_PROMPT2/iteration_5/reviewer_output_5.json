@@ -3,10 +3,10 @@
   "subscores": {
     "code_correctness": 7,
     "alignment_to_goal": 6,
-    "readibility": 7
+    "readibility": 8
   },
   "issues": [
-    "Special keys are not being logged correctly according to the goal. For example, 'shift' logs as [SHIFT] and [/SHIFT], but should be handled like other special keys. See lines 12-20"
+    "Special keys are not fully aligned with the goal. The script misses some special keys (e.g., Tab, Esc). Relevant code: `special_keys = {...}`"
   ],
-  "summary": "Issues with logging shift key events."
+  "summary": "Fails to align with goal due to missing special keys in the dictionary."
 }

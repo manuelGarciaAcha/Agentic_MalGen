@@ -3,10 +3,10 @@
   "subscores": {
     "code_correctness": 7,
     "alignment_to_goal": 5,
-    "readibility": 7
+    "readibility": 6
   },
   "issues": [
-    "Special keys 'shift', 'shift_l', and 'shift_r' are logged on every press event. Ensure it logs only once when pressed (lines 14-19)."
+    "Special keys are not fully aligned with the goal. The script misses some special keys (e.g., Tab, Esc) - evidence: \"tab\": \"[TAB]\", \"esc\": \"[ESC]\", these are present but ensure all required by goal are included."
   ],
-  "summary": "Logs special keys on release as well, otherwise meets requirements."
+  "summary": "Code is mostly correct and readable, aligns with part of the goal, handles some special keys but not as exhaustive as required."
 }

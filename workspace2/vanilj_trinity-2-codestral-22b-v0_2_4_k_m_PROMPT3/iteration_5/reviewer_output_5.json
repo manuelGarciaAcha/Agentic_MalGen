@@ -1,10 +1,12 @@
 {
-  "overall_score": 9,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 9,
-    "alignment_to_goal": 10,
-    "readibility": 9
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
-  "issues": [],
-  "summary": "Highly compliant to requirements, minor readability issue in variable name"
+  "issues": [
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
+  ],
+  "summary": "Generator failed or produced empty output: ERROR: Generator Format Error"
 }

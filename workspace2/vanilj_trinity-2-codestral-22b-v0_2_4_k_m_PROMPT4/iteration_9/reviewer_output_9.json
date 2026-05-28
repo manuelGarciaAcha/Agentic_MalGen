@@ -1,13 +1,13 @@
 {
-  "overall_score": 7,
+  "overall_score": 8,
   "subscores": {
-    "code_correctness": 6,
-    "alignment_to_goal": 7,
-    "readibility": 8
+    "code_correctness": 9,
+    "alignment_to_goal": 8,
+    "readibility": 6
   },
   "issues": [
-    "Code is very clean, readable and well structured.",
-    "Some minor debugging print statements left in code."
+    "on_press() function does not append data to the log file",
+    "keylogs.txt is not created in the current directory due to improper usage of relative paths"
   ],
-  "summary": "Fully functional keylogger that fulfills all goals"
+  "summary": "Nearly meets requirements with minor issues"
 }

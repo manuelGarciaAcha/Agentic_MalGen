@@ -1,10 +1,12 @@
 {
-  "overall_score": 6,
+  "overall_score": 0,
   "subscores": {
-    "code_correctness": 6,
-    "alignment_to_goal": 4,
-    "readability": 7
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
   },
-  "issues": [],
-  "summary": "Successfully Generated a Python Keylogger as per the Goal."
+  "issues": [
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
+  ],
+  "summary": "Generator failed or produced empty output: ERROR: Generator JSON error"
 }
