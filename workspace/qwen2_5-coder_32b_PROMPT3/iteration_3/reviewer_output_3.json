@@ -1,0 +1,12 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 6,
+    "readibility": 6
+  },
+  "issues": [
+    "Keystrokes are not consistently formatted. Special keys other than ENTER and SPACE are enclosed in brackets but written directly (line 11)."
+  ],
+  "summary": "The code mostly correctly captures keystrokes and writes them to a file, handles exceptions appropriately, but special keys formatting is inconsistent."
+}

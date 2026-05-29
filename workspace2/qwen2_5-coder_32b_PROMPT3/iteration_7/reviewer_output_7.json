@@ -1,0 +1,13 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 8,
+    "alignment_to_goal": 5,
+    "readibility": 4
+  },
+  "issues": [
+    "Alignment to goal issue due to missing handling of other special keys. Evidence: Only [ENTER], [SPACE], [TAB], and [BACKSPACE] are explicitly handled while others like arrow keys or F1-F12 could be useful.",
+    "Readability issue due to lack of comments or docstring explaining the code functionality. Evidence: The main function could benefit from a docstring."
+  ],
+  "summary": "Fails to align fully with goal, decent code generation, 2 issues"
+}

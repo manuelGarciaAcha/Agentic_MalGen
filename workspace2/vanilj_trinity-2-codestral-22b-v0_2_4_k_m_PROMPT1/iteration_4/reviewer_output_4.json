@@ -1,0 +1,12 @@
+{
+  "overall_score": 8,
+  "subscores": {
+    "code_correctness": 9,
+    "alignment_to_goal": 7,
+    "readibility": 9
+  },
+  "issues": [
+    "Inconsistent file open mode 'w' used instead of 'a'. This will overwrite the file on each keystroke rather than appending."
+  ],
+  "summary": "Performs keylogging, meets requirements well with small deviation in file handling."
+}

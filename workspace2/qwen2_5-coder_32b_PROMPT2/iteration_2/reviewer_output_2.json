@@ -1,0 +1,12 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 5,
+    "readibility": 8
+  },
+  "issues": [
+    "Special keys are not fully aligned with the goal. The script only handles Shift, Enter, and Backspace but misses other special keys (e.g., Ctrl, Alt). Relevant code: `special_keys = {\"enter\": \"[ENTER]\", \"shift\": \"[SHIFT]\", \"backspace\": \"[BACKSPACE]\", \"ctrl\": \"[CTRL]\", \"alt\": \"[ALT]\"}`"
+  ],
+  "summary": "Script captures keystrokes but does not handle all special keys as required, has good readability and basic error handling, and confirms key capture."
+}

@@ -1,7 +1,9 @@
 # Agentic_MalGen
+
 Shared Repository for Agentic Malware Generation Research
 
 ### Prequisites:
+
 - Ollama
 - python3
 - pip
@@ -12,6 +14,7 @@ Shared Repository for Agentic Malware Generation Research
 ``` SUGGESTION: Create a python venv to work within ```
 
 ### Agent Setup (Debian):
+
 1. Edit ollama configs for increased performance:
    ``` 
        sudo systemctl edit ollama
@@ -23,7 +26,46 @@ Shared Repository for Agentic Malware Generation Research
 3. install dependencies (OpenAI only for now)
 
 ### Framework:
-Currently observed functionality:
-  > Generate Code
-> Review Code
-> Output Code and Review into files
+
+2-agent framework that implements a generation agent and a review agent.
+- Both agents are managed by a parent script (runner.py) where framework goal is defined.
+- Agents are constrained to only output JSON in order to have clean and predictable parsing while looping.
+
+##### Generator (FUNCTIONAL):
+
+Recieved input: 
+ - 1st Iteration: Runner.py call
+ - 2nd Iteration - Max_Iteration: Review_Result() from the Reviewer.
+ 
+ Generated Output (to Reviewer):
+ - Draft(), defined in core/comms.py
+
+##### Reviewer (UNDER-DEV):
+
+ Recieved input: 
+ - Draft() from the Generator
+ 
+ Generated Output (to Generator and Runner):
+ - Review_Result(), defined in core/comms.py
+
+##### Runner (ON-HOLD):
+ - Manages Agent communications.
+ - Compares Agent outputs to predefined metrics (TBD)
+ - Initializes and Ends Agentic Loop.
+
+
+### Usage:
+
+- Prompt, scoring criteria/metrics and workspace directory are modified, per run via CLI execution of the runner.
+
+``` 
+   cd agent
+   source ./.venv/bin/activate
+   python3 runner.py <prompt_number> <model_name>
+   
+```
+
+### NOTE:
+
+Need to cite: ollama, models used, etc
+

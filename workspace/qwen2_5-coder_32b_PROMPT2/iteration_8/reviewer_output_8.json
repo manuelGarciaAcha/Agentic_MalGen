@@ -1,0 +1,13 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 5,
+    "alignment_to_goal": 4,
+    "readibility": 6
+  },
+  "issues": [
+    "The code does not capture real-time keystrokes using a standard Python library. 'pynput' is an external library, not part of the standard library (line 1).",
+    "Special key handling is incomplete; keys like '[CTRL]', '[ALT]', and '[TAB]' are recorded but others might be missed, improving consistency would help."
+  ],
+  "summary": "Fails to align with goal due to non-standard library usage, decent code generation, 2 issues"
+}

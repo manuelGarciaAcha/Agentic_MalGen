@@ -1,0 +1,12 @@
+{
+  "overall_score": 0,
+  "subscores": {
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readibility": 0
+  },
+  "issues": [
+    "Generator produced empty or whitespace-only code. Retry generation from the previous valid code."
+  ],
+  "summary": "Generator failed or produced empty output: Redoing full code generation since no valid previous version given."
+}

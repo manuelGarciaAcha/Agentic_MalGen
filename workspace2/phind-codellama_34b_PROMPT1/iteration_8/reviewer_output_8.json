@@ -1,0 +1,10 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 6,
+    "alignment_to_goal": 5,
+    "readibility": 5
+  },
+  "issues": [],
+  "summary": "Fulfilled goal, proper code structure and naming conventions"
+}

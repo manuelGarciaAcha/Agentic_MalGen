@@ -1,0 +1,8 @@
+{
+  "output": "",
+  "notes": "Redoing full code generation since no valid previous version given.",
+  "applied_fixes": [
+    "iteration1_issue1"
+  ],
+  "iterations": 2
+}

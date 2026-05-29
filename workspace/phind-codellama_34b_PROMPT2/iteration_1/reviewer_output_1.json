@@ -1,0 +1,12 @@
+{
+  "overall_score": 5,
+  "subscores": {
+    "code_correctness": 5,
+    "goal_alignment": 4,
+    "readibility": 6
+  },
+  "issues": [
+    "Missing imports"
+  ],
+  "summary": "Generates keylogs with some issues, must not handle all special keys"
+}

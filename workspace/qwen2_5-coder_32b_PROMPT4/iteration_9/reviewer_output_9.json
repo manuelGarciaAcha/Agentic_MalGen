@@ -1,0 +1,12 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 8,
+    "alignment_to_goal": 7,
+    "readibility": 6
+  },
+  "issues": [
+    "Improper logging for special keys which could lead to ambiguous logs (line 6). Special keys are currently being logged without the 'Key.' prefix for non-control characters."
+  ],
+  "summary": "Code has minor issues with logging special keys and some readability improvements needed"
+}

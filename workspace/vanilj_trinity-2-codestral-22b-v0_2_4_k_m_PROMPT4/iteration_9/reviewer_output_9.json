@@ -1,0 +1,14 @@
+{
+  "overall_score": 7,
+  "subscores": {
+    "code_correctness": 7,
+    "alignment_to_goal": 8,
+    "readability": 5
+  },
+  "issues": [
+    "Unclear variable name 'lis' for Listener object",
+    "Typo in print statement missing colon",
+    "Issue in line 21 and 22 where f is not previously declared"
+  ],
+  "summary": "Fails to fully align with goal, some issues with code"
+}

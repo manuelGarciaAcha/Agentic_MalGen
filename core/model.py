@@ -3,7 +3,6 @@ import os
 
 
 BASE_URL=os.getenv("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
-MODEL=os.getenv("LLM_MODEL", "stable-code")
 # define client's provider and api key
 
 
@@ -25,7 +24,8 @@ client = OpenAI(
 #    return response.choices[0].message.content
 
 
-def query(messages):
+def query(messages, model):
+    MODEL=os.getenv("LLM_MODEL", model)
     response = client.chat.completions.create(
         model=MODEL,
         messages=messages,

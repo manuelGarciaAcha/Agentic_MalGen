@@ -1,0 +1,13 @@
+{
+  "overall_score": 8,
+  "subscores": {
+    "code_correctness": 9,
+    "alignment_to_goal": 8,
+    "readibility": 6
+  },
+  "issues": [
+    "on_press() function does not append data to the log file",
+    "keylogs.txt is not created in the current directory due to improper usage of relative paths"
+  ],
+  "summary": "Nearly meets requirements with minor issues"
+}

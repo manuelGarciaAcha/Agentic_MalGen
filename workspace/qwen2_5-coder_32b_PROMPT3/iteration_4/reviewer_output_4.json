@@ -1,0 +1,12 @@
+{
+  "overall_score": 6,
+  "subscores": {
+    "code_correctness": 6,
+    "alignment_to_goal": 4,
+    "readibility": 7
+  },
+  "issues": [
+    "Special keys other than ENTER and SPACE are not consistently formatted (line 11)"
+  ],
+  "summary": "Partially aligns with goal, some formatting issues, decent code generation, 1 issue"
+}

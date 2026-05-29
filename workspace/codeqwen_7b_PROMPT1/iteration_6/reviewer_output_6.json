@@ -1,0 +1,12 @@
+{
+  "overall_score": 1,
+  "subscores": {
+    "code_correctness": 0,
+    "alignment_to_goal": 0,
+    "readability": 4
+  },
+  "issues": [
+    "ERROR: Requirement #2 (Capture actual keystrokes) is not satisfied as the code only logs keys that were pressed."
+  ],
+  "summary": "Requirements partially met"
+}
