@@ -16,11 +16,10 @@ Shared Repository for Agentic Malware Generation Research
 ### Agent Setup (Debian):
 
 1. Edit ollama configs for increased performance:
-   ``` 
-       sudo systemctl edit ollama
+   ``` sudo systemctl edit ollama
        # within ollama config:
-       Environment=OLLAMA_DEBUG=1
-       Environment=OLLAMA_FLASH_ATTENTION=1```
+       OLLAMA_DEBUG=1
+       OLLAMA_FLASH_ATTENTION=1```
 2. Enter venv
    ``` source ./<venv_dir>/bin/activate```
 3. install dependencies (OpenAI only for now)
