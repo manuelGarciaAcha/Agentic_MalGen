@@ -30,7 +30,7 @@ Shared Repository for Agentic Malware Generation Research
 - Both agents are managed by a parent script (runner.py) where framework goal is defined.
 - Agents are constrained to only output JSON in order to have clean and predictable parsing while looping.
 
-##### Generator (FUNCTIONAL):
+##### Generator:
 
 Recieved input: 
  - 1st Iteration: Runner.py call
@@ -39,7 +39,7 @@ Recieved input:
  Generated Output (to Reviewer):
  - Draft(), defined in core/comms.py
 
-##### Reviewer (UNDER-DEV):
+##### Reviewer:
 
  Recieved input: 
  - Draft() from the Generator
@@ -47,7 +47,7 @@ Recieved input:
  Generated Output (to Generator and Runner):
  - Review_Result(), defined in core/comms.py
 
-##### Runner (ON-HOLD):
+##### Runner:
  - Manages Agent communications.
  - Compares Agent outputs to predefined metrics (TBD)
  - Initializes and Ends Agentic Loop.
@@ -63,6 +63,23 @@ Recieved input:
    python3 runner.py <prompt_number> <model_name>
    
 ```
+
+### Script Breakdown and Summaries:
+  - runner.py: the main orchestrator program, which includes the agentic control loop, logging, JSON to Python conversion, and execution
+
+agents/
+  - generator.py: generator agent setup. Includes model prompt to create the "context" for the agent. Preparation of Draft output also included here.
+  - reviewer.py: reviewer agent setup. Similar to generator, but with different context and also includes code review criteria
+
+core/
+  - comms.py: includes dataclass defenitions, specifically for communication configurations between agents and orchestrator
+  - model.py: creates the interface between agents and LLM
+  - prompts.py: simple dictionary with all 4 prompts
+
+logs/
+  - slurm_runner.log: calico output, included for debugging
+
+workspace and workspace2: where all outputs are iteration logs are written to.
 
 ### NOTE:
 
