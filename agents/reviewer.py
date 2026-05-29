@@ -4,6 +4,7 @@ sys.path.append('../')
 from core.comms import *
 import json
 from core.model import query
+from core.helpers import extract_json_object
 from typing import List, Dict, Any, Literal
 
 
@@ -138,15 +139,7 @@ class Reviewer:
 
     def _parse_json_reviewer(self, raw: str, metrics: Dict[str,str]) -> dict:
         try:
-            raw = raw.strip()
-            if raw.startswith("```"):
-                raw = raw.strip("`")
-                raw = raw.replace("json", "", 1).strip()
-
-            if raw.startswith(">"):
-                raw = raw.lstrip("> ").strip()
-
-            return json.loads(raw)
+            return extract_json_object(raw)
         except Exception as e:
             print(f"Reviewer JSON Parse failed", e)
 

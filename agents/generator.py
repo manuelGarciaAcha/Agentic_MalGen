@@ -4,6 +4,7 @@ sys.path.append('../')
 from core.comms import *
 import json
 from core.model import query
+from core.helpers import helpers
 from typing import List, Dict, Any
 
 
@@ -112,15 +113,7 @@ class Generator:
         )
     def _parse_json_generator(self, raw: str) -> dict:
         try:
-            raw = raw.strip()
-            if raw.startswith("```"):
-                raw = raw.strip("`")
-                raw = raw.replace("json", "", 1).strip()
-
-            if raw.startswith(">"):
-                raw = raw.lstrip("> ").strip()
-
-            return json.loads(raw)
+            return extract_json_object
         except Exception as e:
             print("Generator JSON Parse failed", e)
 
