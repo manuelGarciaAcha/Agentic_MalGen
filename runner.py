@@ -68,7 +68,7 @@ class Runner:
         test_dir_name: str,
         min_iterations: int = 1,
         max_iterations: int = 10,
-        log_dir: str = "./workspace2",
+        log_dir: str = "./workspace",
     ) -> dict:
         if min_iterations < 1:
             raise ValueError("minimum iterations must be at least one")
