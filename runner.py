@@ -24,13 +24,12 @@ from core.prompts import PROMPTS
 
 # Models from the original experiment
 MODELS = [
-    "codegemma:7b",
-    "codeqwen:7b",
-    "codestral:22b",
-    "stablecode:3b",
     "yi-coder:9b",
-    "deepseek-coder:6.7b",
-    "codellama:7b",
+    "codeqwen:7b",
+    "qwen2.5-coder:32b",
+    "vanilj/trinity-2-codestral-22b-v0.2:4_k_m",
+    "codegemma:7b",
+    "phind-codellama:34b",
 ]
 
 
@@ -53,17 +52,17 @@ def initial_state(model_name: str, prompt_key: str) -> MalGenState:
 
 def save_run(workspace: Path, final_state: MalGenState, model: str, prompt_key: str):
     """Save full run artifacts to workspace directory — mirrors original output structure."""
-    run_dir = workspace / f"{model.replace(':', '_')}_PROMPT{prompt_key}"
+    run_dir = workspace / f"{model.replace(':', '_').replace('/', '_')}_PROMPT{prompt_key}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
     # Final code
     if final_state["current_code"]:
-        code_path = run_dir / f"{model.replace(':', '_')}_P{prompt_key}_output.py"
+        code_path = run_dir / f"{model.replace(':', '_').replace('/', '_')}_P{prompt_key}_output.py"
         code_path.write_text(final_state["current_code"])
 
     # Evasion-hardened code
     if final_state.get("evasion") and final_state["evasion"].get("modified_code"):
-        evasion_path = run_dir / f"{model.replace(':', '_')}_P{prompt_key}_evasion.py"
+        evasion_path = run_dir / f"{model.replace(':', '_').replace('/', '_')}_P{prompt_key}_evasion.py"
         evasion_path.write_text(final_state["evasion"]["modified_code"])
 
     # Full state as JSON
@@ -136,12 +135,15 @@ def run_batch(workspace: Path):
             if r.get("error"):
                 scores.append("ERR")
             elif r.get("passed_review"):
-                scores.append(str(r.get("final_score", "?")))
+                scores.append(f"PASSED/R{review_score}/E{evasion_score}")
             else:
-                scores.append("FAIL")
+                review_score = r.get("final_score", "?")
+                evasion_score = r.get("evasion_score", "?")
+
+                scores.append(f"FAIL/R{review_score}/E{evasion_score}")
         pass_count = sum(1 for r in model_results if r.get("passed_review"))
         total = len(model_results)
-        print(f"{model:<25} " + " ".join(f"{s:>6}" for s in scores) + f" {pass_count}/{total:>5}")
+        print(f"{model:<35} " + " ".join(f"{s:>20}" for s in scores) + f" {pass_count}/{total:>5}")
 
     (workspace / "batch_results.json").write_text(json.dumps(results, indent=2))
 

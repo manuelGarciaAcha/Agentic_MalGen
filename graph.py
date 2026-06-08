@@ -52,7 +52,7 @@ def route_after_review(state: MalGenState) -> str:
     We express the same logic inverted for clarity.
     """
     if state["max_iterations_reached"]:
-        return "end"
+        return "evasion"
     if state["passed_review"]:
         return "evasion"
     return "regenerate"

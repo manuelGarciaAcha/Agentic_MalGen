@@ -1,4 +1,4 @@
-for run in workspace2/*; do
+for run in workspace/*; do
     [ -d "$run" ] || continue
 
     run_name=$(basename "$run")
