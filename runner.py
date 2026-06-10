@@ -30,6 +30,10 @@ MODELS = [
     "vanilj/trinity-2-codestral-22b-v0.2:4_k_m",
     "codegemma:7b",
     "phind-codellama:34b",
+    "codestral:22b",
+    "stablecode:3b",
+    "deepseek-coder:6.7b",
+    "codellama:7b",
 ]
 
 
@@ -155,7 +159,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch", action="store_true")
     args = parser.parse_args()
 
-    workspace = Path("workspace")
+    workspace = Path("workspace2")
     workspace.mkdir(exist_ok=True)
 
     if args.batch:
