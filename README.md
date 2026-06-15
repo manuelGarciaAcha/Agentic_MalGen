@@ -1,87 +1,92 @@
-# Agentic_MalGen
+# Agentic Malware Generation — LangGraph Multi-Agent System
 
-Shared Repository for Agentic Malware Generation Research
+An orchestrated multi-agent system for studying LLM-driven malware generation,
+built with LangGraph. Extension of the v1 system (Generator + Reviewer + custom
+Runner orchestrator) to a four-node typed state graph.
 
-### Prequisites:
+## Architecture
 
-- Ollama
-- python3
-- pip
-- sudo privileges
-- code capable model installed locally (Current code targeting Stable-Code(4b quantized))
-- OpenAI python library
-  
-``` SUGGESTION: Create a python venv to work within ```
-
-### Agent Setup (Debian):
-
-1. Edit ollama configs for increased performance:
-   ``` sudo systemctl edit ollama
-       # within ollama config:
-       OLLAMA_DEBUG=1
-       OLLAMA_FLASH_ATTENTION=1```
-2. Enter venv
-   ``` source ./<venv_dir>/bin/activate```
-3. install dependencies (OpenAI only for now)
-
-### Framework:
-
-2-agent framework that implements a generation agent and a review agent.
-- Both agents are managed by a parent script (runner.py) where framework goal is defined.
-- Agents are constrained to only output JSON in order to have clean and predictable parsing while looping.
-
-##### Generator:
-
-Recieved input: 
- - 1st Iteration: Runner.py call
- - 2nd Iteration - Max_Iteration: Review_Result() from the Reviewer.
- 
- Generated Output (to Reviewer):
- - Draft(), defined in core/comms.py
-
-##### Reviewer:
-
- Recieved input: 
- - Draft() from the Generator
- 
- Generated Output (to Generator and Runner):
- - Review_Result(), defined in core/comms.py
-
-##### Runner:
- - Manages Agent communications.
- - Compares Agent outputs to predefined metrics (TBD)
- - Initializes and Ends Agentic Loop.
-
-
-### Usage:
-
-- Prompt, scoring criteria/metrics and workspace directory are modified, per run via CLI execution of the runner.
-
-``` 
-   cd agent
-   source ./.venv/bin/activate
-   python3 runner.py <prompt_number> <model_name>
-   
+```
+[START] → [Planner] → [Generator] → [Reviewer] → <route>
+                           ↑                          |
+                           |── "regenerate" ──────────┘
+                           
+                       "evasion" → [Evasion Analyst] → [END]
+                       "end"     → [END]
 ```
 
-### Script Breakdown and Summaries:
-  - runner.py: the main orchestrator program, which includes the agentic control loop, logging, JSON to Python conversion, and execution
+### Agents
 
-agents/
-  - generator.py: generator agent setup. Includes model prompt to create the "context" for the agent. Preparation of Draft output also included here.
-  - reviewer.py: reviewer agent setup. Similar to generator, but with different context and also includes code review criteria
+| Agent | Role | New in v2? |
+|---|---|---|
+| **Planner** | Decomposes raw prompt into structured `MalSpec` | ✅ New |
+| **Generator** | Generates Python malware code from `MalSpec` | Evolved from v1 |
+| **Reviewer** | Evaluates code against `MalSpec`, scores 0-10 | Evolved from v1 |
+| **Evasion Analyst** | Analyzes final code for detectable patterns, produces hardened version | ✅ New |
 
-core/
-  - comms.py: includes dataclass defenitions, specifically for communication configurations between agents and orchestrator
-  - model.py: creates the interface between agents and LLM
-  - prompts.py: simple dictionary with all 4 prompts
+### Key improvements over v1
 
-logs/
-  - slurm_runner.log: calico output, included for debugging
+1. **Typed state** — `MalGenState` TypedDict replaces freeform JSON inter-agent comms.
+   The primary failure mode in v1 was JSON formatting errors in the reviewer loop
+   (caused complete failure for Stable Code and Yi-Coder 9B). Pydantic schema
+   validation in all structured queries eliminates this class of errors.
 
-workspace and workspace2: where all outputs are iteration logs are written to.
+2. **Planner node** — Task decomposition is separated from code generation.
+   In v1, raw prompts were sent directly to the Generator, leading to inconsistent
+   interpretation across models. The Planner produces a structured `MalSpec` that
+   all downstream agents evaluate against the same criteria.
 
-### NOTE:
+3. **Evasion Analyst** — Post-convergence agent that evaluates final code for
+   static AV signatures, behavioral EDR patterns, and string-based heuristics.
+   Produces an evasion-hardened version of the approved code and an evasion score.
 
-Need to cite: ollama, models used, etc
+4. **LangGraph graph structure** — The custom while-loop in `runner.py` is replaced
+   by a compiled `StateGraph` with explicit conditional edges. This gives full
+   execution traces, checkpointing support, and clean separation of routing logic.
 
+## Setup
+
+```bash
+pip install -r requirements.txt
+
+# Start local LLM server (Ollama example)
+ollama serve
+ollama pull codegemma:7b
+```
+
+## Usage
+
+```bash
+# Single run
+python runner.py --model codegemma:7b --prompt 1
+
+# All models x all prompts (replicates original experiment)
+python runner.py --batch
+```
+
+## Output structure
+
+```
+workspace/
+  codegemma_7b_PROMPT1/
+    codegemma_7b_P1_output.py        # final generated code
+    codegemma_7b_P1_evasion.py       # evasion-hardened version
+    final_output.json                # full run summary + trace
+  batch_results.json                 # aggregate results across all runs
+```
+
+## Models tested
+
+- CodeGemma 7B
+- CodeQwen 7B  
+- Codestral 22B
+- StableCode 3B
+- Yi-Coder 9B
+- DeepSeek-Coder 6.7B
+- CodeLlama 7B
+
+## Ethical note
+
+This system is designed for controlled cybersecurity research in isolated environments.
+All testing uses network-isolated VMs. No external network calls are made during
+code generation.
