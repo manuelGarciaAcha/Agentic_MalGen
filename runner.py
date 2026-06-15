@@ -1,15 +1,10 @@
 """
 runner.py — Entry point for the LangGraph agentic malware generation system.
 
-Replaces the original runner.py while-loop orchestrator.
-LangGraph handles the iteration loop via the compiled graph;
-this script handles experiment setup, workspace logging, and
-multi-model/multi-prompt batch runs matching the original experiment design.
-
 Usage:
     python runner.py --model codegemma:7b --prompt 1
     python runner.py --model codestral:22b --prompt 4
-    python runner.py --batch  # runs all 7 models x 4 prompts
+    python runner.py --batch  # runs all 10 models x 4 prompts
 """
 
 import argparse

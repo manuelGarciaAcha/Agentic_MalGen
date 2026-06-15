@@ -4,6 +4,10 @@ An orchestrated multi-agent system for studying LLM-driven malware generation,
 built with LangGraph. Extension of the v1 system (Generator + Reviewer + custom
 Runner orchestrator) to a four-node typed state graph.
 
+## Context
+
+This implementation is used in the study "Evaluating Agentic AI Frameworks for Malware Generation."
+
 ## Architecture
 
 ```
@@ -17,34 +21,24 @@ Runner orchestrator) to a four-node typed state graph.
 
 ### Agents
 
-| Agent | Role | New in v2? |
-|---|---|---|
-| **Planner** | Decomposes raw prompt into structured `MalSpec` | ✅ New |
-| **Generator** | Generates Python malware code from `MalSpec` | Evolved from v1 |
-| **Reviewer** | Evaluates code against `MalSpec`, scores 0-10 | Evolved from v1 |
-| **Evasion Analyst** | Analyzes final code for detectable patterns, produces hardened version | ✅ New |
+| Agent | Role |
+|---|---|
+| **Planner** | Decomposes raw prompt into structured `MalSpec` |
+| **Generator** | Generates Python implementation from `MalSpec` |
+| **Reviewer** | Evaluates code against `MalSpec`, scores 0-10 |
+| **Evasion Analyst** | Analyzes final code for detectable patterns, produces hardened version |
 
-### Key improvements over v1
+## Repository Structure
 
-1. **Typed state** — `MalGenState` TypedDict replaces freeform JSON inter-agent comms.
-   The primary failure mode in v1 was JSON formatting errors in the reviewer loop
-   (caused complete failure for Stable Code and Yi-Coder 9B). Pydantic schema
-   validation in all structured queries eliminates this class of errors.
+agents/              Agent implementations
+core/                Shared interfaces: prompts, model, state
+calico/              Cluster ulitities
+workspace*/          Generated outputs
+graph.py             LangGraph definiton
+runner.py            Agentic orchestration script
+direct_runner.py     Single Pass orchestration script
 
-2. **Planner node** — Task decomposition is separated from code generation.
-   In v1, raw prompts were sent directly to the Generator, leading to inconsistent
-   interpretation across models. The Planner produces a structured `MalSpec` that
-   all downstream agents evaluate against the same criteria.
-
-3. **Evasion Analyst** — Post-convergence agent that evaluates final code for
-   static AV signatures, behavioral EDR patterns, and string-based heuristics.
-   Produces an evasion-hardened version of the approved code and an evasion score.
-
-4. **LangGraph graph structure** — The custom while-loop in `runner.py` is replaced
-   by a compiled `StateGraph` with explicit conditional edges. This gives full
-   execution traces, checkpointing support, and clean separation of routing logic.
-
-## Setup
+## Setup (Local)
 
 ```bash
 pip install -r requirements.txt
@@ -54,14 +48,47 @@ ollama serve
 ollama pull codegemma:7b
 ```
 
-## Usage
+## Experimental Configuration
+
+Models: 10
+Prompts: 4
+Conditions:
+- Agentic/Iterative
+- Single Pass
+
+Trails per Condition: 2
+
+Total Executions: 160
+
+## Usage (Local)
 
 ```bash
-# Single run
-python runner.py --model codegemma:7b --prompt 1
-
-# All models x all prompts (replicates original experiment)
+# Agentic Condition
 python runner.py --batch
+
+# Single Pass Condition
+python direct_runner.py --batch
+```
+
+## Setup (Calico Cluster)
+
+```bash
+pip install -r requirements.txt
+
+# Pull models from Ollama
+cd calico
+sbatch ollama_model_load.sh
+```
+
+## Usage (Calico Cluster)
+``` bash 
+cd calico
+
+# Run agentic framework
+sbatch slurm_runner.sh
+
+# Run single-pass
+sbatch slurm_runner_direct.sh
 ```
 
 ## Output structure
@@ -77,13 +104,16 @@ workspace/
 
 ## Models tested
 
-- CodeGemma 7B
-- CodeQwen 7B  
-- Codestral 22B
-- StableCode 3B
-- Yi-Coder 9B
-- DeepSeek-Coder 6.7B
-- CodeLlama 7B
+- yi-coder:9b 
+- codeqwen:7b 
+- qwen2.5-coder:32b
+- vanilj/trinity-2-codestral-22b-v0.2:4_k_m 
+- codegemma:7b 
+- phind-codellama:34b 
+- codestral:22b 
+- stable-code:3b 
+- deepseek-coder:6.7b 
+- codellama:7b 
 
 ## Ethical note
 

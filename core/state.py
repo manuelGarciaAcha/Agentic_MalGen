@@ -1,10 +1,6 @@
 """
 MalGenState: Typed LangGraph state for the agentic malware generation system.
 
-Replaces the freeform JSON inter-agent communication (Draft, ReviewResult,
-FixItems in the original comms.py) with a single typed TypedDict that
-LangGraph carries across all nodes. This eliminates the JSON formatting
-failure mode identified as the primary failure cause in the v1 system.
 """
 
 from typing import Annotated, Optional

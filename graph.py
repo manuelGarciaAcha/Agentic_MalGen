@@ -20,13 +20,6 @@ Graph topology:
        |
     [END]
 
-Key design decisions:
-  1. Typed state (MalGenState) replaces freeform JSON inter-agent comms.
-  2. Pydantic schema validation in model.py replaces raw JSON parsing.
-  3. Planner node separates task decomposition from code generation.
-  4. Evasion Analyst runs post-convergence, keeping review concerns separate.
-  5. Conditional edge logic mirrors the original Runner's loop conditions
-     (continue if issues exist OR score < 7, stop at max_iterations).
 """
 
 from langgraph.graph import StateGraph, START, END
@@ -42,14 +35,11 @@ from agents.evasion_analyst import evasion_analyst_node
 
 def route_after_review(state: MalGenState) -> str:
     """
-    Routing logic — mirrors the original Runner's loop conditions:
+    Routing logic:
       - If max iterations reached: end (regardless of score)
       - If passed review (score >= 7, no issues, syntax valid): go to evasion
       - Otherwise: regenerate
 
-    The original system used:
-      if iteration < max_iterations AND (issues exist OR score < 7): continue
-    We express the same logic inverted for clarity.
     """
     if state["max_iterations_reached"]:
         return "evasion"

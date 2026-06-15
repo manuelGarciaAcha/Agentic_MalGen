@@ -1,10 +1,9 @@
 """
-direct_runner.py — Entry point for the LangGraph agentic malware generation system control group (direct LLM prompting).
-
+direct_runner.py — Entry point for the LangGraph single pass malware generation condition (direct LLM prompting).
 Usage:
     python direct_runner.py --model codegemma:7b --prompt 1
     python direct_runner.py --model codestral:22b --prompt 4
-    python direct_runner.py --batch  # runs all 7 models x 4 prompts
+    python direct_runner.py --batch  # runs all 10 models x 4 prompts
 """
 
 import argparse

